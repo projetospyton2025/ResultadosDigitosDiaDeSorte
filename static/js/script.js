@@ -365,23 +365,18 @@
         const combinacoesTable = document.createElement('table');
         combinacoesTable.className = 'combinations-table';
         
-        // Cabeçalho da tabela
-        const headerRow = document.createElement('tr');
-        [
-            'Combinação', 
-            'Qtd. Dígitos', 
-            'Frequência', 
-            'Média Intervalos', 
-            'Menor Intervalo', 
-            'Maior Intervalo', 
-            'Último Intervalo', 
-            'Detalhes'
-        ].forEach(text => {
-            const th = document.createElement('th');
-            th.textContent = text;
-            headerRow.appendChild(th);
-        });
-        combinacoesTable.appendChild(headerRow);
+		// Cabeçalho da tabela
+		const headerRow = document.createElement('tr');
+		[
+			'Combinação', 
+			'Qtd. Dígitos', 
+			'Frequência', 
+			'Detalhes'
+		].forEach(text => {
+			const th = document.createElement('th');
+			th.textContent = text;
+			headerRow.appendChild(th);
+		});        combinacoesTable.appendChild(headerRow);
         
         // Dados da tabela
         combinationStats.combinacoesFrequentes.forEach(combo => {
@@ -401,26 +396,6 @@
             const tdFreq = document.createElement('td');
             tdFreq.textContent = combo.concursos.length;
             row.appendChild(tdFreq);
-            
-            // Média de intervalos
-            const tdMedia = document.createElement('td');
-            tdMedia.textContent = combo.mediaIntervalos || '-';
-            row.appendChild(tdMedia);
-            
-            // Menor intervalo
-            const tdMenor = document.createElement('td');
-            tdMenor.textContent = combo.menorIntervalo || '-';
-            row.appendChild(tdMenor);
-            
-            // Maior intervalo
-            const tdMaior = document.createElement('td');
-            tdMaior.textContent = combo.maiorIntervalo || '-';
-            row.appendChild(tdMaior);
-            
-            // Último intervalo
-            const tdUltimo = document.createElement('td');
-            tdUltimo.textContent = combo.ultimoIntervalo || '-';
-            row.appendChild(tdUltimo);
             
             // Botão para ver detalhes
             const tdDetails = document.createElement('td');
