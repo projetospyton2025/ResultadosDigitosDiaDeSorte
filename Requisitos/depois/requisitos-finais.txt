@@ -1,0 +1,29 @@
+é imprecindível que o código traga os concursos da dia de sorte do primeiro até o ultimo atual... 
+é imprecindivel que o código traga os concursos da dia de sorte em ordem crescente ou seja primeiro o ultimo e dois o primeiro.. 
+
+ex1
+Exibindo 1038 de 1038 resultados (sem limites). Use os filtros para refinar a busca.
+
+
+
+ex2 
+1	13/05/2018	04 - 08 - 11 - 17 - 24 - 29 - 30	9 8 7 4 3 2 1 0	0,1,2,3,4,7,8,9	8	Copiar
+2	16/05/2018	05 - 06 - 10 - 12 - 14 - 18 - 23	8 6 5 4 3 2 1 0	0,1,2,3,4,5,6,8	8	Copiar
+3	19/05/2018	07 - 08 - 11 - 12 - 21 - 29 - 30	9 8 7 3 2 1 0	0,1,2,3,7,8,9	7	Copiar
+4	22/05/2018	02 - 06 - 10 - 12 - 16 - 19 - 23	9 6 3 2 1 0	0,1,2,3,6,9	6	Copiar
+5	25/05/2018	01 - 12 - 13 - 17 - 18 - 26 - 28	8 7 6 3 2 1 0	0,1,2,3,6,7,8	7	Copiar
+6	28/05/2018	01 - 10 - 14 - 16 - 18 - 23 - 25	8 6 5 4 3 2 1 0	0,1,2,3,4,5,6,8	8	Copiar
+
+ou seja classificar o concurso em ordem decrescente (do maior para o maior)
+ou seja ainda no lugar do 6 era para ter o ultimo concurso... 
+6	28/05/2018	01 - 10 - 14 - 16 - 18 - 23 - 25	8 6 5 4 3 2 1 0	0,1,2,3,4,5,6,8	8	Copiar
+5	25/05/2018	01 - 12 - 13 - 17 - 18 - 26 - 28	8 7 6 3 2 1 0	0,1,2,3,6,7,8	7	Copiar
+4	22/05/2018	02 - 06 - 10 - 12 - 16 - 19 - 23	9 6 3 2 1 0	0,1,2,3,6,9	6	Copiar
+3	19/05/2018	07 - 08 - 11 - 12 - 21 - 29 - 30	9 8 7 3 2 1 0	0,1,2,3,7,8,9	7	Copiar
+2	16/05/2018	05 - 06 - 10 - 12 - 14 - 18 - 23	8 6 5 4 3 2 1 0	0,1,2,3,4,5,6,8	8	Copiar
+1	13/05/2018	04 - 08 - 11 - 17 - 24 - 29 - 30	9 8 7 4 3 2 1 0	0,1,2,3,4,7,8,9	8	Copiar
+
+
+do resto esta 100% não precisa alterar/excluir/mexer em nada.. apenas estas duas alterações
+trazer todos os concursos
+classificar a coljuna concurso

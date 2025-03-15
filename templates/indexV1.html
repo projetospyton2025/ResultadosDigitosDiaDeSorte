@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -50,7 +50,6 @@
             display: flex;
             justify-content: center;
             margin-bottom: 20px;
-            flex-wrap: wrap;
         }
 
         .button {
@@ -589,43 +588,6 @@
             border-color: #4CAF50;
         }
 
-        /* === Frequency Analysis Modal === */
-        .frequency-analysis-container {
-            margin: 20px 0;
-            padding: 20px;
-            background-color: #f0f8ff;
-            border-radius: 5px;
-            border: 1px solid var(--border-color);
-        }
-
-        .frequency-chart {
-            width: 100%;
-            height: 300px;
-            margin: 20px 0;
-        }
-
-        .digit-trend {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 20px 0;
-        }
-
-        .trend-item {
-            display: inline-block;
-            padding: 10px;
-            background-color: #f5f5f5;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .trend-item:hover, .trend-item.selected {
-            background-color: var(--border-color);
-            color: white;
-        }
-
         /* === Responsividade === */
         @media (max-width: 1200px) {
             .container {
@@ -726,7 +688,6 @@
 
         <div class="actions">
             <button class="button" id="loadButton">Recarregar Dados</button>
-            <button class="button" id="analisarFrequenciaButton">Analisar Frequência</button>
             <button class="button" id="resumoButton">Gerar Resumo</button>
         </div>
 
@@ -741,12 +702,6 @@
 
         <!-- Área do resumo - será preenchido automaticamente -->
         <div id="resumoContainer"></div>
-
-        <!-- Área de análise de frequência - será preenchida pelo botão analisar frequência -->
-        <div id="frequencyAnalysisContainer" class="frequency-analysis-container" style="display: none;">
-            <h2>Análise Avançada de Frequência</h2>
-            <div id="frequencyAnalysisContent"></div>
-        </div>
 
         <!-- Filtros -->
         <div id="filterContainer" class="filter-container">
@@ -863,7 +818,6 @@
             
             // ===== Elementos da UI =====
             const loadButton = document.getElementById('loadButton');
-            const analisarFrequenciaButton = document.getElementById('analisarFrequenciaButton');
             const resumoButton = document.getElementById('resumoButton');
             const downloadCSVButton = document.getElementById('downloadCSV');
             const downloadJSONButton = document.getElementById('downloadJSON');
@@ -880,8 +834,6 @@
             const debugInfoDiv = document.getElementById('debugInfo');
             const progressContainer = document.getElementById('progressContainer');
             const progressBar = document.getElementById('progressBar');
-            const frequencyAnalysisContainer = document.getElementById('frequencyAnalysisContainer');
-            const frequencyAnalysisContent = document.getElementById('frequencyAnalysisContent');
             
             // ===== Registrar Eventos =====
             loadButton.addEventListener('click', () => {
@@ -889,11 +841,6 @@
                 resetUI();
                 fetchCompleteDiaDeSorteResults();
             });
-            
-            analisarFrequenciaButton.addEventListener('click', () => {
-                analisarFrequenciaEntreSequencias();
-            });
-            
             resumoButton.addEventListener('click', gerarResumo);
             downloadCSVButton.addEventListener('click', downloadCSV);
             downloadJSONButton.addEventListener('click', downloadJSON);
@@ -919,10 +866,6 @@
                 digitChartDiv.innerHTML = '';
                 combinationAnalysisDiv.innerHTML = '';
                 filterContainerDiv.innerHTML = '';
-                
-                // Ocultar área de análise de frequência
-                frequencyAnalysisContainer.style.display = 'none';
-                frequencyAnalysisContent.innerHTML = '';
                 
                 // Mostrar mensagem de carregamento
                 loadingMessage.style.display = 'block';
@@ -2442,356 +2385,6 @@
                 }
             }
             
-            // ===== Função para analisar frequência entre sequências =====
-            function analisarFrequenciaEntreSequencias() {
-                addDebugInfo("Analisando frequências entre sequências de dígitos...");
-                
-                // Verificar se os resultados foram carregados
-                if (!allResults || allResults.length === 0) {
-                    alert("É necessário carregar os resultados primeiro antes de analisar frequências.\n\nPor favor, clique em 'Recarregar Dados' e tente novamente.");
-                    return;
-                }
-                
-                try {
-                    // Mostrar área de análise de frequência
-                    frequencyAnalysisContainer.style.display = 'block';
-                    frequencyAnalysisContent.innerHTML = '<div class="loading">Analisando frequências, aguarde...</div>';
-                    
-                    // Estrutura para armazenar estatísticas avançadas
-                    const estatisticas = {
-                        combinacoesFrequentes: {},  // Para armazenar todas as combinações encontradas
-                        intervalos: {},             // Para armazenar análises de intervalos
-                        mediaGeral: 0,              // Média geral de intervalos
-                        totalIntervalos: 0          // Total de intervalos analisados
-                    };
-                    
-                    // 1. Usar as combinações já analisadas anteriormente
-                    const combinacoesFrequentes = combinationStats.combinacoesFrequentes || [];
-                    
-                    // 2. Adicionar informações adicionais para cada combinação
-                    for (const combo of combinacoesFrequentes) {
-                        // Calcular tendências e padrões adicionais
-                        if (combo.intervalos && combo.intervalos.length > 0) {
-                            // Análise de tendências nos intervalos
-                            const intervalosOrdenados = [...combo.intervalos].sort((a, b) => a - b);
-                            const mediana = intervalosOrdenados[Math.floor(intervalosOrdenados.length / 2)];
-                            
-                            // Verificar se há padrão crescente ou decrescente
-                            let padrao = "Estável";
-                            let crescente = 0;
-                            let decrescente = 0;
-                            
-                            for (let i = 1; i < combo.intervalos.length; i++) {
-                                if (combo.intervalos[i] > combo.intervalos[i-1]) crescente++;
-                                else if (combo.intervalos[i] < combo.intervalos[i-1]) decrescente++;
-                            }
-                            
-                            const total = combo.intervalos.length - 1;
-                            if (crescente / total > 0.6) padrao = "Crescente";
-                            else if (decrescente / total > 0.6) padrao = "Decrescente";
-                            
-                            // Adicionar estas informações ao combo
-                            combo.mediana = mediana;
-                            combo.padrao = padrao;
-                            combo.tendenciaCrescente = crescente / total;
-                            combo.tendenciaDecrescente = decrescente / total;
-                        }
-                    }
-                    
-                    // 3. Calcular estatísticas gerais
-                    estatisticas.combinacoesOrdenadas = combinacoesFrequentes;
-                    
-                    let somaIntervalos = 0;
-                    let totalIntervalos = 0;
-                    
-                    combinacoesFrequentes.forEach(combo => {
-                        if (combo.intervalos && combo.intervalos.length > 0) {
-                            somaIntervalos += combo.intervalos.reduce((a, b) => a + b, 0);
-                            totalIntervalos += combo.intervalos.length;
-                        }
-                    });
-                    
-                    estatisticas.mediaGeral = totalIntervalos > 0 ? Math.round(somaIntervalos / totalIntervalos) : 0;
-                    estatisticas.totalIntervalos = totalIntervalos;
-                    
-                    // 4. Encontrar valores máximos para destaque
-                    estatisticas.maximos = {
-                        frequencia: Math.max(...combinacoesFrequentes.map(c => c.concursos.length)),
-                        mediaIntervalos: Math.max(...combinacoesFrequentes.map(c => c.mediaIntervalos || 0)),
-                        menorIntervalo: Math.max(...combinacoesFrequentes.map(c => c.menorIntervalo || 0)),
-                        maiorIntervalo: Math.max(...combinacoesFrequentes.map(c => c.maiorIntervalo || 0)),
-                        ultimoIntervalo: Math.max(...combinacoesFrequentes.map(c => c.ultimoIntervalo || 0))
-                    };
-                    
-                    // 5. Gerar saída para a UI
-                    gerarUIAnaliseFrequencia(estatisticas);
-                    
-                    // Rolar até a análise
-                    frequencyAnalysisContainer.scrollIntoView({ behavior: 'smooth' });
-                    
-                    addDebugInfo("Análise de frequência concluída com sucesso");
-                    return estatisticas;
-                } catch (error) {
-                    addDebugInfo(`Erro ao analisar frequências: ${error.message}`);
-                    frequencyAnalysisContent.innerHTML = `
-                        <div class="error-message">
-                            Erro ao analisar frequências: ${error.message}<br>
-                            Por favor, recarregue os dados e tente novamente.
-                        </div>
-                    `;
-                    return null;
-                }
-            }
-            
-            // Função para gerar a UI da análise de frequência
-            function gerarUIAnaliseFrequencia(estatisticas) {
-                // Limpar o conteúdo anterior
-                frequencyAnalysisContent.innerHTML = '';
-                
-                // Criar as seções da análise
-                
-                // 1. Estatísticas gerais
-                const statsGerais = document.createElement('div');
-                statsGerais.className = 'estatisticas-gerais';
-                statsGerais.innerHTML = `
-                    <h3>Estatísticas Gerais de Intervalos</h3>
-                    <div class="stats-grid">
-                        <div class="stat-box">
-                            <div class="stat-title">Média Geral</div>
-                            <div class="stat-value">${estatisticas.mediaGeral}</div>
-                            <div class="stat-desc">concursos entre aparições</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-title">Total de Intervalos</div>
-                            <div class="stat-value">${estatisticas.totalIntervalos}</div>
-                            <div class="stat-desc">analisados</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-title">Maior Frequência</div>
-                            <div class="stat-value destacado">${estatisticas.maximos.frequencia}</div>
-                            <div class="stat-desc">aparições</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-title">Maior Intervalo</div>
-                            <div class="stat-value destacado">${estatisticas.maximos.maiorIntervalo}</div>
-                            <div class="stat-desc">concursos</div>
-                        </div>
-                    </div>
-                `;
-                
-                // 2. Análise de tendências
-                const tendenciasSection = document.createElement('div');
-                tendenciasSection.className = 'section-tendencias';
-                tendenciasSection.innerHTML = `
-                    <h3>Análise de Tendências</h3>
-                    <p>Esta análise mostra padrões identificados na aparição das combinações mais frequentes.</p>
-                `;
-                
-                // Criar tabela de tendências
-                const tableTendencias = document.createElement('table');
-                tableTendencias.className = 'combinations-table';
-                
-                // Cabeçalho
-                const headerTendencias = document.createElement('tr');
-                ['Combinação', 'Frequência', 'Média', 'Mediana', 'Padrão', 'Tendência Crescente', 'Tendência Decrescente', 'Último Intervalo'].forEach(text => {
-                    const th = document.createElement('th');
-                    th.textContent = text;
-                    headerTendencias.appendChild(th);
-                });
-                tableTendencias.appendChild(headerTendencias);
-                
-                // Dados da tabela de tendências (top 10 combinações)
-                estatisticas.combinacoesOrdenadas.slice(0, 10).forEach(combo => {
-                    const row = document.createElement('tr');
-                    
-                    // Combinação
-                    const tdCombo = document.createElement('td');
-                    tdCombo.textContent = combo.digitos.join(',');
-                    row.appendChild(tdCombo);
-                    
-                    // Frequência
-                    const tdFreq = document.createElement('td');
-                    tdFreq.textContent = combo.concursos.length;
-                    row.appendChild(tdFreq);
-                    
-                    // Média
-                    const tdMedia = document.createElement('td');
-                    tdMedia.textContent = combo.mediaIntervalos || '-';
-                    row.appendChild(tdMedia);
-                    
-                    // Mediana
-                    const tdMediana = document.createElement('td');
-                    tdMediana.textContent = combo.mediana || '-';
-                    row.appendChild(tdMediana);
-                    
-                    // Padrão
-                    const tdPadrao = document.createElement('td');
-                    tdPadrao.textContent = combo.padrao || 'Indefinido';
-                    if (combo.padrao === 'Crescente') {
-                        tdPadrao.style.color = '#d9534f';
-                        tdPadrao.style.fontWeight = 'bold';
-                    } else if (combo.padrao === 'Decrescente') {
-                        tdPadrao.style.color = '#5cb85c';
-                        tdPadrao.style.fontWeight = 'bold';
-                    }
-                    row.appendChild(tdPadrao);
-                    
-                    // Tendência Crescente
-                    const tdCrescente = document.createElement('td');
-                    tdCrescente.textContent = combo.tendenciaCrescente ? `${Math.round(combo.tendenciaCrescente * 100)}%` : '-';
-                    row.appendChild(tdCrescente);
-                    
-                    // Tendência Decrescente
-                    const tdDecrescente = document.createElement('td');
-                    tdDecrescente.textContent = combo.tendenciaDecrescente ? `${Math.round(combo.tendenciaDecrescente * 100)}%` : '-';
-                    row.appendChild(tdDecrescente);
-                    
-                    // Último Intervalo
-                    const tdUltimo = document.createElement('td');
-                    tdUltimo.textContent = combo.ultimoIntervalo || '-';
-                    
-                    // Destacar último intervalo se for muito maior que a média
-                    if (combo.ultimoIntervalo && combo.mediaIntervalos && combo.ultimoIntervalo > combo.mediaIntervalos * 1.5) {
-                        tdUltimo.style.color = '#d9534f';
-                        tdUltimo.style.fontWeight = 'bold';
-                    }
-                    
-                    row.appendChild(tdUltimo);
-                    
-                    tableTendencias.appendChild(row);
-                });
-                
-                tendenciasSection.appendChild(tableTendencias);
-                
-                // 3. Melhores apostas (recomendações) com base na análise
-                const recomendacoesSection = document.createElement('div');
-                recomendacoesSection.className = 'section-recomendacoes';
-                recomendacoesSection.innerHTML = `
-                    <h3>Recomendações para Apostas</h3>
-                    <p>Com base na análise estatística, estas são as combinações com maior probabilidade de aparecer nos próximos sorteios.</p>
-                `;
-                
-                // Identificar combinações com melhor potencial para próximas apostas
-                const combinacoesRecomendadas = estatisticas.combinacoesOrdenadas
-                    .filter(combo => combo.intervalos && combo.intervalos.length > 0)
-                    .map(combo => ({
-                        ...combo,
-                        potencial: calcularPotencialAposta(combo, estatisticas.mediaGeral)
-                    }))
-                    .sort((a, b) => b.potencial - a.potencial)
-                    .slice(0, 5); // Top 5 recomendações
-                
-                // Criar tabela de recomendações
-                const tableRecomendacoes = document.createElement('table');
-                tableRecomendacoes.className = 'combinations-table';
-                
-                // Cabeçalho
-                const headerRecomendacoes = document.createElement('tr');
-                ['Combinação', 'Potencial', 'Atual vs Média', 'Aparições', 'Último Intervalo', 'Média', 'Próxima Esperada'].forEach(text => {
-                    const th = document.createElement('th');
-                    th.textContent = text;
-                    headerRecomendacoes.appendChild(th);
-                });
-                tableRecomendacoes.appendChild(headerRecomendacoes);
-                
-                // Preencher dados
-                combinacoesRecomendadas.forEach(combo => {
-                    const row = document.createElement('tr');
-                    
-                    // Combinação
-                    const tdCombo = document.createElement('td');
-                    tdCombo.textContent = combo.digitos.join(',');
-                    tdCombo.style.fontWeight = 'bold';
-                    row.appendChild(tdCombo);
-                    
-                    // Potencial (percentual)
-                    const tdPotencial = document.createElement('td');
-                    tdPotencial.textContent = `${Math.round(combo.potencial * 100)}%`;
-                    tdPotencial.style.fontWeight = 'bold';
-                    if (combo.potencial > 0.7) {
-                        tdPotencial.style.color = '#5cb85c'; // Verde para alto potencial
-                    } else if (combo.potencial > 0.5) {
-                        tdPotencial.style.color = '#f0ad4e'; // Amarelo para médio potencial
-                    } else {
-                        tdPotencial.style.color = '#d9534f'; // Vermelho para baixo potencial
-                    }
-                    row.appendChild(tdPotencial);
-                    
-                    // Atual vs Média (quanto do intervalo médio já passou)
-                    const percentualIntervalo = Math.round((combo.ultimoIntervalo / combo.mediaIntervalos) * 100);
-                    const tdPercentual = document.createElement('td');
-                    tdPercentual.textContent = `${percentualIntervalo}%`;
-                    if (percentualIntervalo >= 100) {
-                        tdPercentual.style.color = '#5cb85c';
-                        tdPercentual.style.fontWeight = 'bold';
-                    }
-                    row.appendChild(tdPercentual);
-                    
-                    // Aparições
-                    const tdAparicoes = document.createElement('td');
-                    tdAparicoes.textContent = combo.concursos.length;
-                    row.appendChild(tdAparicoes);
-                    
-                    // Último Intervalo
-                    const tdUltimo = document.createElement('td');
-                    tdUltimo.textContent = combo.ultimoIntervalo;
-                    row.appendChild(tdUltimo);
-                    
-                    // Média
-                    const tdMedia = document.createElement('td');
-                    tdMedia.textContent = combo.mediaIntervalos;
-                    row.appendChild(tdMedia);
-                    
-                    // Próxima esperada (último concurso + média)
-                    const ultimoConcurso = Math.max(...combo.concursos.map(c => parseInt(c)));
-                    const proximaEsperada = ultimoConcurso + combo.mediaIntervalos;
-                    const tdProxima = document.createElement('td');
-                    tdProxima.textContent = proximaEsperada;
-                    row.appendChild(tdProxima);
-                    
-                    tableRecomendacoes.appendChild(row);
-                });
-                
-                recomendacoesSection.appendChild(tableRecomendacoes);
-                
-                // Adicionar todas as seções ao container
-                frequencyAnalysisContent.appendChild(statsGerais);
-                frequencyAnalysisContent.appendChild(tendenciasSection);
-                frequencyAnalysisContent.appendChild(recomendacoesSection);
-            }
-            
-            // Função para calcular o potencial de uma combinação para apostas
-            function calcularPotencialAposta(combo, mediaGeral) {
-                if (!combo.mediaIntervalos || !combo.ultimoIntervalo) return 0;
-                
-                // Fatores considerados:
-                // 1. Quanto do intervalo médio já passou (mais é melhor)
-                const fatorIntervalo = Math.min(combo.ultimoIntervalo / combo.mediaIntervalos, 1.5);
-                
-                // 2. Frequência relativa (mais é melhor)
-                const fatorFrequencia = Math.min(combo.concursos.length / 30, 1);
-                
-                // 3. Estabilidade (menor variação é melhor)
-                const variacao = combo.maiorIntervalo && combo.menorIntervalo 
-                    ? (combo.maiorIntervalo - combo.menorIntervalo) / combo.mediaIntervalos
-                    : 1;
-                const fatorEstabilidade = Math.max(0, 1 - (variacao / 2));
-                
-                // 4. Tendência (decrescente é ligeiramente melhor)
-                const fatorTendencia = combo.padrao === 'Decrescente' ? 1.1 : 
-                                       combo.padrao === 'Crescente' ? 0.9 : 1;
-                
-                // Combinar os fatores (com pesos)
-                const potencial = (
-                    (fatorIntervalo * 0.6) + 
-                    (fatorFrequencia * 0.2) + 
-                    (fatorEstabilidade * 0.1) + 
-                    (fatorTendencia * 0.1)
-                ) / 1;
-                
-                return Math.min(1, Math.max(0, potencial));
-            }
-
             // ===== Funções para download =====
             function downloadCSV() {
                 if (allResults.length === 0) {
@@ -2800,9 +2393,6 @@
                 }
                 
                 try {
-                    // Ordenar os resultados em ordem decrescente para o XLS também
-                    const resultadosOrdenados = [...filteredResults].sort((a, b) => parseInt(b.concurso) - parseInt(a.concurso));
-                    
                     // Criando uma tabela HTML que o Excel pode importar corretamente
                     let excelContent = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">';
                     excelContent += '<head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Dígitos Dia de Sorte</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->';
@@ -2819,6 +2409,9 @@
                     excelContent += '<th style="background-color: #000000; color: #ffffff;">Dígitos Ordenados</th>';
                     excelContent += '<th style="background-color: #000000; color: #ffffff;">Qtd. Dígitos</th>';
                     excelContent += '</tr>';
+                    
+                    // Ordenar os resultados em ordem decrescente para o Excel também
+                    const resultadosOrdenados = [...filteredResults].sort((a, b) => parseInt(b.concurso) - parseInt(a.concurso));
                     
                     // Adicionar dados - TODOS os resultados, sem limitação
                     for (let i = 0; i < resultadosOrdenados.length; i++) {
