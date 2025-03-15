@@ -1,266 +1,103 @@
-Combinação: "0,1,2,3,5,7,9" (mantido igual)
-Frequência: 22 (mantido igual)
-Intervalo Médio: 41 
-Menor Intervalo: 3 
-Maior Intervalo: 121 
-Último Intervalo: 38 
+PS J:\Meu Drive\ProjetosPython\Loterias\Loterias-ResultadosDigitos\ResultadosDigitosDiaDeSorte> dir
 
 
-
-Diretório: J:\Meu Drive\ProjetosPython\Loterias\Loterias-ResultadosDigitos\ResultadosDigitosMegaSena
+    Diretório: J:\Meu Drive\ProjetosPython\Loterias\Loterias-ResultadosDigitos\ResultadosDigitosDiaDeSorte
 
 
 Mode                 LastWriteTime         Length Name
 ----                 -------------         ------ ----
-d-----        05/03/2025     06:34                Requisitos
-d-----        05/03/2025     06:34                static
-d-----        05/03/2025     07:45                templates
-d-----        05/03/2025     06:34                venv
-d-----        05/03/2025     06:34                app
+d-----        05/03/2025     16:29                app
+d-----        05/03/2025     16:19                Requisitos
+d-----        05/03/2025     16:19                static
+d-----        14/03/2025     20:14                templates
+d-----        14/03/2025     19:06                venv
 ------        27/02/2025     04:46           1096 LICENSE
 ------        27/02/2025     04:46             27 README.md
-------        28/02/2025     06:18            497 .env
+------        05/03/2025     15:45            182 .env
 ------        27/02/2025     05:43            221 .gitignore
-------        27/02/2025     05:59              0 app.log
-------        27/02/2025     05:43            108 requirements.txt
-------        27/02/2025     05:59           7788 run.ps1
-------        28/02/2025     06:12           1625 run.py
+------        05/03/2025     16:23             68 app.log
+------        05/03/2025     15:41            110 requirements.txt
+------        05/03/2025     16:27           1648 app.py
 
- tree templates\js /F
- tree static\css /F
- tree static\js /F
- 
- (venv) PS J:\Meu Drive\ProjetosPython\Loterias\Loterias-ResultadosDigitos\ResultadosDigitosMegaSena> tree templates\js /F
-Listagem de caminhos de pasta para o volume projetospython2025@gmail.com ...
-O número de série do volume é 00000056 1983:1116
-J:\MEU DRIVE\PROJETOSPYTHON\LOTERIAS\LOTERIAS-RESULTADOSDIGITOS\RESULTADOSDIGITOSMEGASENA\TEMPLATES\JS
-Caminho inválido - \MEU DRIVE\PROJETOSPYTHON\LOTERIAS\LOTERIAS-RESULTADOSDIGITOS\RESULTADOSDIGITOSMEGASENA\TEMPLATES\JS
-Não existem subpastas
-
-(venv) PS J:\Meu Drive\ProjetosPython\Loterias\Loterias-ResultadosDigitos\ResultadosDigitosMegaSena> tree static\css /F
-Listagem de caminhos de pasta para o volume projetospython2025@gmail.com ...
-O número de série do volume é 000000A7 1983:1116
-J:\MEU DRIVE\PROJETOSPYTHON\LOTERIAS\LOTERIAS-RESULTADOSDIGITOS\RESULTADOSDIGITOSMEGASENA\STATIC\CSS
-    popup-style.css
-    styles.css
-    tabelas-responsivas.css
-
-Não existem subpastas
-
-(venv) PS J:\Meu Drive\ProjetosPython\Loterias\Loterias-ResultadosDigitos\ResultadosDigitosMegaSena> tree static\js /F
-Listagem de caminhos de pasta para o volume projetospython2025@gmail.com ...
-O número de série do volume é 00000091 1983:1116
-J:\MEU DRIVE\PROJETOSPYTHON\LOTERIAS\LOTERIAS-RESULTADOSDIGITOS\RESULTADOSDIGITOSMEGASENA\STATIC\JS
-    frequency-analysis.js
-    highlight-max.js
-    popup-explicacao.js
-    script.js
-    script.js.bak
-    resumo-simples.js
-    tabelas-responsivas.js
-    resumo-estrategia.js
-
-Não existem subpastas
+PS J:\Meu Drive\ProjetosPython\Loterias\Loterias-ResultadosDigitos\ResultadosDigitosDiaDeSorte> Get-ChildItem -Directory | ForEach-Object { $_.FullName; Get-ChildItem $_.FullName }
+>>
+J:\Meu Drive\ProjetosPython\Loterias\Loterias-ResultadosDigitos\ResultadosDigitosDiaDeSorte\app
 
 
-(venv) PS J:\Meu Drive\ProjetosPython\Loterias\Loterias-ResultadosDigitos\ResultadosDigitosMegaSena> tree app /F
-Listagem de caminhos de pasta para o volume projetospython2025@gmail.com ...
-O número de série do volume é 000000B1 1983:1116
-J:\MEU DRIVE\PROJETOSPYTHON\LOTERIAS\LOTERIAS-RESULTADOSDIGITOS\RESULTADOSDIGITOSMEGASENA\APP
-│   routes.py
-│   __init__.py
-│
-└───__pycache__
-        routes.cpython-313.pyc
-        __init__.cpython-312.pyc
-        __init__.cpython-313.pyc
-		
-		from flask import render_template, jsonify, request
-from app import app
-import requests
-import redis
-import os
-import json
-import logging
+    Diretório: J:\Meu Drive\ProjetosPython\Loterias\Loterias-ResultadosDigitos\ResultadosD
+    igitosDiaDeSorte\app
 
-# Configurar logging
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
 
-# Configurações do Redis
-REDIS_HOST = os.getenv('REDIS_HOST')
-REDIS_PORT = os.getenv('REDIS_PORT')
-REDIS_PASSWORD = os.getenv('REDIS_PASSWORD')
-REDIS_DB = os.getenv('REDIS_DB', '0')
-API_BASE_URL = os.getenv('API_BASE_URL')
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        14/03/2025     19:12                __pycache__
+------        05/03/2025     15:51           6713 routes.py
+------        27/02/2025     05:43            318 __init__.py
+J:\Meu Drive\ProjetosPython\Loterias\Loterias-ResultadosDigitos\ResultadosDigitosDiaDeSorte\Requisitos
 
-logger.info(f"Configurações carregadas: HOST={REDIS_HOST}, PORT={REDIS_PORT}, API={API_BASE_URL}")
 
-# Conexão com o Redis
-try:
-    redis_client = redis.Redis(
-        host=REDIS_HOST,
-        port=int(REDIS_PORT),
-        password=REDIS_PASSWORD,
-        db=int(REDIS_DB),
-        decode_responses=True
-    )
-    # Teste da conexão
-    redis_client.ping()
-    logger.info("Conexão com Redis estabelecida com sucesso")
-except Exception as e:
-    logger.error(f"Erro ao conectar ao Redis: {str(e)}")
-    # Criar um mock do redis em memória para não quebrar a aplicação
-    class MockRedis:
-        def __init__(self):
-            self.data = {}
-        
-        def get(self, key):
-            return self.data.get(key)
-        
-        def set(self, key, value, ex=None):
-            self.data[key] = value
-            return True
-        
-        def ping(self):
-            return True
-    
-    redis_client = MockRedis()
-    logger.warning("Usando Redis em memória (mock)")
+    Diretório: J:\Meu Drive\ProjetosPython\Loterias\Loterias-ResultadosDigitos\ResultadosD
+    igitosDiaDeSorte\Requisitos
 
-@app.route('/')
-def index():
-    return render_template('index.html')
 
-@app.route('/api/resultados')
-def get_resultados():
-    cache_key = 'megasena:resultados'
-    
-    # Verifica se os dados estão em cache
-    try:
-        cached_data = redis_client.get(cache_key)
-        if cached_data:
-            logger.info("Usando dados do cache para resultados")
-            return jsonify(json.loads(cached_data))
-    except Exception as e:
-        logger.error(f"Erro ao acessar cache: {str(e)}")
-    
-    # Se não estiver em cache, busca na API
-    try:
-        logger.info(f"Buscando dados na API: {API_BASE_URL}/megasena")
-        response = requests.get(f"{API_BASE_URL}/megasena")
-        if response.status_code == 200:
-            data = response.json()
-            logger.info(f"Dados recebidos da API: {len(data)} registros")
-            # Salva no Redis por 1 hora (3600 segundos)
-            try:
-                redis_client.set(cache_key, json.dumps(data), ex=3600)
-            except Exception as e:
-                logger.error(f"Erro ao salvar no cache: {str(e)}")
-            return jsonify(data)
-        else:
-            logger.error(f"Erro ao acessar API: {response.status_code}")
-            return jsonify({"error": f"Erro ao acessar a API: {response.status_code}"}), 500
-    except Exception as e:
-        logger.error(f"Exceção ao buscar dados: {str(e)}")
-        return jsonify({"error": str(e)}), 500
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        05/03/2025     16:19                antes
+d-----        14/03/2025     20:35                depois
+J:\Meu Drive\ProjetosPython\Loterias\Loterias-ResultadosDigitos\ResultadosDigitosDiaDeSorte\static
 
-@app.route('/api/digitos')
-def get_digitos():
-    cache_key = 'megasena:digitos'
-    
-    # Log para debug
-    logger.info("Rota /api/digitos acessada")
-    
-    # Verifica se os dados estão em cache
-    try:
-        cached_data = redis_client.get(cache_key)
-        if cached_data:
-            logger.info("Usando dados do cache para dígitos")
-            return jsonify(json.loads(cached_data))
-    except Exception as e:
-        logger.error(f"Erro ao acessar cache: {str(e)}")
-    
-    # Se não estiver em cache, processa os dados
-    try:
-        logger.info(f"Buscando dados na API: {API_BASE_URL}/megasena")
-        response = requests.get(f"{API_BASE_URL}/megasena")
-        if response.status_code == 200:
-            data = response.json()
-            logger.info(f"Dados recebidos da API: {len(data)} registros")
-            
-            # Processar os dígitos
-            resultados_processados = []
-            frequencia_digitos = {str(i): 0 for i in range(10)}
-            
-            for concurso in data:
-                dezenas = concurso.get('dezenas', [])
-                
-                # Extrair dígitos únicos das dezenas
-                digitos_unicos_set = set()
-                for dezena in dezenas:
-                    for digito in dezena:
-                        digitos_unicos_set.add(digito)
-                        frequencia_digitos[digito] += 1
-                
-                # Converter para lista e ordenar (ordem decrescente para exibição)
-                digitos_unicos = sorted(list(digitos_unicos_set), reverse=True)
-                
-                # Ordenar dígitos para facilitar cópia (ordem crescente)
-                digitos_ordenados = sorted(list(digitos_unicos_set))
-                
-                resultados_processados.append({
-                    'concurso': concurso.get('concurso'),
-                    'data': concurso.get('data'),
-                    'dezenas': dezenas,
-                    'digitos': digitos_unicos,  # Dígitos sem repetição, em ordem decrescente
-                    'digitos_ordenados': digitos_ordenados,  # Dígitos sem repetição, em ordem crescente
-                    'digitos_para_copia': ','.join(digitos_ordenados),  # Com vírgulas para facilitar cópia
-                    'digitos_para_exibicao': ' '.join(digitos_unicos),  # Com espaços para exibição
-                    'contagem_digitos': len(digitos_unicos_set)  # Quantidade de dígitos únicos
-                })
-            
-            # Ordenar frequência de dígitos
-            frequencia_ordenada = {k: v for k, v in sorted(frequencia_digitos.items(), key=lambda item: item[1], reverse=True)}
-            
-            resultado_final = {
-                'resultados': resultados_processados,
-                'frequencia_digitos': frequencia_ordenada
-            }
-            
-            # Salva no Redis por 1 hora (3600 segundos)
-            try:
-                redis_client.set(cache_key, json.dumps(resultado_final), ex=3600)
-            except Exception as e:
-                logger.error(f"Erro ao salvar no cache: {str(e)}")
-                
-            logger.info("Processamento de dígitos concluído com sucesso")
-            return jsonify(resultado_final)
-        else:
-            logger.error(f"Erro ao acessar API: {response.status_code}")
-            return jsonify({"error": f"Erro ao acessar a API: {response.status_code}"}), 500
-    except Exception as e:
-        logger.error(f"Exceção ao processar dados: {str(e)}")
-        return jsonify({"error": str(e)}), 500
-		
-		import os
-from flask import Flask
-from flask_cors import CORS
-from dotenv import load_dotenv
 
-load_dotenv()  # Carregar variÃ¡veis de ambiente do arquivo .env
+    Diretório: J:\Meu Drive\ProjetosPython\Loterias\Loterias-ResultadosDigitos\ResultadosD
+    igitosDiaDeSorte\static
 
-app = Flask(__name__, 
-            static_folder='../static',
-            template_folder='../templates')
-CORS(app)
 
-from app import routes
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        06/03/2025     06:59                css
+d-----        06/03/2025     06:07                js
+J:\Meu Drive\ProjetosPython\Loterias\Loterias-ResultadosDigitos\ResultadosDigitosDiaDeSorte\templates
+
+
+    Diretório: J:\Meu Drive\ProjetosPython\Loterias\Loterias-ResultadosDigitos\ResultadosD
+    igitosDiaDeSorte\templates
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+------        14/03/2025     17:45           3558 index.html
+J:\Meu Drive\ProjetosPython\Loterias\Loterias-ResultadosDigitos\ResultadosDigitosDiaDeSorte\venv
+
+
+    Diretório: J:\Meu Drive\ProjetosPython\Loterias\Loterias-ResultadosDigitos\ResultadosD
+    igitosDiaDeSorte\venv
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        14/03/2025     19:06                Include
+d-----        14/03/2025     19:06                Lib
+d-----        14/03/2025     19:11                Scripts
+------        14/03/2025     19:06             71 .gitignore
+------        14/03/2025     19:06            249 pyvenv.cfg
+
+
+
+#requirements.txt
+Flask==2.3.3
+Flask-Cors==4.0.0
+redis==5.0.1
+python-dotenv==1.0.0
+requests==2.31.0
+gunicorn==21.2.0
+
+
+#app.py
 import logging
 from app import app
 from dotenv import load_dotenv, find_dotenv
 import redis
 import os
+
 
 # Tenta encontrar e carregar o arquivo .env
 dotenv_path = find_dotenv()
@@ -268,7 +105,8 @@ if not dotenv_path:
     print("❌ ERRO: Arquivo .env não encontrado!")
 else:
     print(f"✅ Arquivo .env encontrado: {dotenv_path}")
-    load_dotenv(dotenv_path)
+    #load_dotenv(dotenv_path)
+    load_dotenv()
 
 # Pegando a URL do Redis
 REDIS_URL = os.getenv("REDIS_URL")
@@ -303,17 +141,141 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-
+"""
 if __name__ == '__main__':
     logger.info("Iniciando aplicação...")
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port, debug=True)
   
 """
+
+
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port)
-"""
+
+
+#.gitignore
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.class
+
+# Environment
+.env
+venv/
+env/
+ENV/
+
+# Flask
+instance/
+.webassets-cache
+
+# Redis
+dump.rdb
+
+# Logs
+*.log
+
+# Outros
+.DS_Store
+
+
+#.env
+API_BASE_URL=https://loteriascaixa-api.herokuapp.com/api
+REDIS_URL=redis://default:B058xThhTvAbptQa0s25EAGk7A5u473O@redis-13833.c336.samerica-east1-1.gce.redns.redis-cloud.com:13833
+
+
+#index.html
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dígitos Dia de Sorte</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+	  <link rel="stylesheet" href="{{ url_for('static', filename='css/popup-style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tabelas-responsivas.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Análise de Dígitos do <span class="destaque">Dia de Sorte</span></h1>
+        
+        <div class="centralizado">
+            <p>Análise dos dígitos de todos os sorteios do Dia de Sorte</p>
+        </div>
+
+        <div class="actions">
+            <button class="button" id="loadButton">Carregar Resultados</button>
+        </div>
+
+        <div id="loadingMessage" class="loading" style="display: none;">Carregando resultados...</div>
+        <div id="completedMessage" class="completed" style="display: none;">Carregamento concluído!</div>
+
+        <!-- Nova seção de filtros -->
+        <div id="filterContainer" class="filter-container">
+            <!-- Será preenchido via JavaScript -->
+        </div>
+
+        <!-- Estatísticas de Dígitos -->
+        <div class="statistics-container">
+            <h2>Estatísticas de Dígitos</h2>
+            <div id="digitStats" class="digit-stats">
+                <div class="digit-frequency">
+                    <h3>Frequência de Dígitos</h3>
+                    <div id="digitFrequency"></div>
+                </div>
+                <div class="digit-charts">
+                    <h3>Gráfico de Frequência</h3>
+                    <div id="digitChart"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nova seção de análise de combinações -->
+        <div id="combinationAnalysis" class="combination-analysis">
+            <!-- Será preenchido via JavaScript -->
+        </div>
+
+        <!-- Tabela de Resultados -->
+        <h2>Resultados Detalhados</h2>
+        <table id="diaDeSorteResults">
+            <thead>
+                <tr>
+                    <th>Concurso</th>
+                    <th>Data</th>
+                    <th>Dezenas</th>
+                    <th>Dígitos</th>
+                    <th>Dígitos Ordenados</th>
+                    <th>Qtd. Dígitos</th>
+                    <th>Copiar</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <!-- Botões de Download -->
+        <div class="download-buttons">
+            <button class="button" id="downloadCSV">Baixar XLS</button>
+            <button class="button" id="downloadJSON">Baixar HTML</button>
+            <button class="button" id="downloadTXT">Baixar TXT</button>
+        </div>
+    </div>
+
+    <footer>Feito por: <i>Márcio Fernando Maia - Todos os direitos reservados - 2025</i></footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+	  <script src="{{ url_for('static', filename='js/highlight-max.js') }}"></script>
+	  <script src="{{ url_for('static', filename='js/frequency-analysis.js') }}"></script>
+	  <script src="{{ url_for('static', filename='js/popup-explicacao.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/resumo-simples.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/tabelas-responsivas.js') }}"></script>
+</body>
+</html>
+
+
+#frequency-analysis.js
 // Função para analisar frequências entre sequências de dígitos
 // Função para analisar frequências entre sequências de dígitos
 function analisarFrequenciaEntreSequencias() {
@@ -1147,6 +1109,688 @@ document.addEventListener('DOMContentLoaded', function() {
     // Esperar um pouco para garantir que a análise de frequência já foi executada
     setTimeout(adicionarPopupExplicacao, 2000);
 });
+
+
+#highlight-max.js
+// Script para destacar valores máximos nas estatísticas
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("Script de destaque de máximos inicializado");
+    
+    // Função para encontrar o valor máximo nas tabelas e destacá-lo
+    function highlightMaxValuesAfterLoading() {
+        console.log("Iniciando função de destaque de valores máximos");
+        
+        // ===== 1. Destacar frequência de dígitos =====
+        try {
+            // Encontrar todas as caixas de dígitos
+            const digitBoxes = document.querySelectorAll('.digit-box');
+            console.log(`Encontradas ${digitBoxes.length} caixas de dígitos`);
+            
+            if (digitBoxes.length > 0) {
+                // Encontrar o maior valor
+                let maxValue = 0;
+                let maxBox = null;
+                
+                digitBoxes.forEach(box => {
+                    const countSpan = box.querySelector('.digit-count');
+                    if (countSpan) {
+                        const value = parseInt(countSpan.textContent);
+                        if (!isNaN(value) && value > maxValue) {
+                            maxValue = value;
+                            maxBox = box;
+                        }
+                    }
+                });
+                
+                // Aplicar destaque
+                if (maxBox) {
+                    console.log(`Valor máximo encontrado: ${maxValue}`);
+                    maxBox.style.backgroundColor = '#d9534f';
+                    maxBox.style.transform = 'scale(1.1)';
+                    maxBox.style.boxShadow = '0 0 8px rgba(217, 83, 79, 0.7)';
+                    
+                    const countSpan = maxBox.querySelector('.digit-count');
+                    if (countSpan) {
+                        countSpan.style.fontWeight = 'bold';
+                        countSpan.style.color = '#fff';
+                    }
+                }
+            }
+        } catch (error) {
+            console.error("Erro ao destacar frequência de dígitos:", error);
+        }
+        
+        // ===== 2. Destacar gráfico de frequência =====
+        try {
+            const chartRows = document.querySelectorAll('#digitChart > div');
+            console.log(`Encontradas ${chartRows.length} linhas no gráfico`);
+            
+            if (chartRows.length > 0) {
+                let maxValue = 0;
+                let maxRow = null;
+                
+                chartRows.forEach(row => {
+                    const valueDiv = row.querySelector('div > div:last-child');
+                    if (valueDiv) {
+                        const value = parseInt(valueDiv.textContent);
+                        if (!isNaN(value) && value > maxValue) {
+                            maxValue = value;
+                            maxRow = row;
+                        }
+                    }
+                });
+                
+                if (maxRow) {
+                    console.log(`Valor máximo no gráfico: ${maxValue}`);
+                    maxRow.style.backgroundColor = 'rgba(217, 83, 79, 0.15)';
+                    
+                    // Destacar a barra
+                    const bar = maxRow.querySelector('div > div > div');
+                    if (bar) {
+                        bar.style.backgroundColor = '#d9534f';
+                    }
+                    
+                    // Destacar o valor
+                    const valueDiv = maxRow.querySelector('div > div:last-child');
+                    if (valueDiv) {
+                        valueDiv.style.color = '#d9534f';
+                        valueDiv.style.fontWeight = 'bold';
+                    }
+                }
+            }
+        } catch (error) {
+            console.error("Erro ao destacar gráfico de frequência:", error);
+        }
+        
+        // ===== 3. Destacar tabelas =====
+        try {
+            // Combinações mais frequentes - coluna de frequência é a 3ª (índice 2)
+            highlightMaxValueInTable('table.combinations-table', 2);
+            
+            // Resumo por quantidade de dígitos - coluna de número de sorteios é a 2ª (índice 1)
+            highlightMaxValueInTable('table.summary-table', 1);
+            
+            // Modal de combinações similares - coluna de frequência é a 4ª (índice 3)
+            const modalTable = document.querySelector('.similares-table');
+            if (modalTable) {
+                highlightMaxValueInTable('.similares-table', 3);
+            }
+        } catch (error) {
+            console.error("Erro ao destacar tabelas:", error);
+        }
+    }
+    
+    // Função auxiliar para destacar o valor máximo em uma tabela
+    function highlightMaxValueInTable(selector, columnIndex) {
+        const table = document.querySelector(selector);
+        if (!table) {
+            console.log(`Tabela não encontrada: ${selector}`);
+            return;
+        }
+        
+        const rows = table.querySelectorAll('tbody tr');
+        if (rows.length === 0) {
+            console.log(`Nenhuma linha encontrada na tabela ${selector}`);
+            return;
+        }
+        
+        console.log(`Analisando ${rows.length} linhas na tabela ${selector}`);
+        
+        let maxValue = 0;
+        let maxRow = null;
+        
+        rows.forEach(row => {
+            if (row.cells.length <= columnIndex) return;
+            
+            const cell = row.cells[columnIndex];
+            const value = parseInt(cell.textContent.replace(/\D/g, ''));
+            
+            if (!isNaN(value) && value > maxValue) {
+                maxValue = value;
+                maxRow = row;
+            }
+        });
+        
+        if (maxRow) {
+            console.log(`Valor máximo na tabela ${selector}: ${maxValue}`);
+            
+            // Destacar a linha inteira
+            maxRow.style.backgroundColor = 'rgba(217, 83, 79, 0.15)';
+            
+            // Destacar a célula específica
+            const cell = maxRow.cells[columnIndex];
+            cell.style.fontWeight = 'bold';
+            cell.style.color = '#d9534f';
+            cell.style.fontSize = '110%';
+        }
+    }
+    
+    // Configurar o evento do botão de carregamento
+    function setupHighlightEvents() {
+        const loadButton = document.getElementById('loadButton');
+        if (loadButton) {
+            console.log("Botão de carregamento encontrado");
+            
+            // Adicionar o novo handler com nosso código
+            loadButton.addEventListener('click', function() {
+                console.log("Botão de carregar clicado, agendando destaque");
+                // Aguardar o carregamento dos dados (2 segundos deve ser suficiente)
+                setTimeout(highlightMaxValuesAfterLoading, 2000);
+            });
+            
+            // Verificar se já existem dados carregados
+            setTimeout(highlightMaxValuesAfterLoading, 1000);
+        } else {
+            console.warn("Botão de carregamento não encontrado!");
+            // Tentar novamente em 1 segundo
+            setTimeout(setupHighlightEvents, 1000);
+        }
+    }
+    
+    // Iniciar a configuração
+    setupHighlightEvents();
+    
+    // Adicionar CSS necessário
+    const style = document.createElement('style');
+    style.textContent = `
+        /* Estilo para elementos destacados */
+        .highlighted-max {
+            transition: all 0.3s ease;
+        }
+    `;
+    document.head.appendChild(style);
+});
+
+
+#popup-explicacao.js
+// Variável global para controlar a visibilidade dos ícones
+let iconesMostrados = false;
+let botoesInfo = [];
+
+// Função para adicionar/remover botões de informação
+function alternarBotoesInformacao() {
+    console.log("Alternando botões de informação...");
+    
+    if (iconesMostrados) {
+        // Esconder/remover os ícones
+        botoesInfo.forEach(botao => {
+            botao.style.display = 'none';
+        });
+        
+        document.querySelectorAll('.explicacao-popup').forEach(popup => {
+            popup.style.display = 'none';
+        });
+        
+        iconesMostrados = false;
+        
+        // Atualizar texto do botão
+        const botaoExplicacao = document.getElementById('botao-explicacao');
+        if (botaoExplicacao) {
+            botaoExplicacao.textContent = 'Mostrar Explicações';
+        }
+        
+        console.log("Ícones de informação ocultados");
+    } else {
+        // Limpar qualquer botão existente
+        botoesInfo.forEach(botao => {
+            botao.style.display = 'inline-block';
+        });
+        
+        // Se ainda não tiver criado, criar os botões
+        if (botoesInfo.length === 0) {
+            // Adicionar botão na seção de estatísticas gerais
+            const estatisticasTitle = document.querySelector('.estatisticas-gerais h3');
+            if (estatisticasTitle) {
+                const botao = adicionarBotaoInfo(estatisticasTitle, getExplicacaoGeral());
+                botoesInfo.push(botao);
+            }
+            
+            // Adicionar botões em cada caixa de estatística
+            const statBoxes = document.querySelectorAll('.stat-box');
+            statBoxes.forEach(box => {
+                const titulo = box.querySelector('.stat-title');
+                if (titulo) {
+                    const textoTitulo = titulo.textContent.trim();
+                    const botao = adicionarBotaoInfo(titulo, getExplicacaoPara(textoTitulo));
+                    botoesInfo.push(botao);
+                }
+            });
+        }
+        
+        iconesMostrados = true;
+        
+        // Atualizar texto do botão
+        const botaoExplicacao = document.getElementById('botao-explicacao');
+        if (botaoExplicacao) {
+            botaoExplicacao.textContent = 'Ocultar Explicações';
+        }
+        
+        console.log("Ícones de informação mostrados");
+    }
+}
+
+// Função para adicionar botão de informação a um elemento
+function adicionarBotaoInfo(elemento, textoExplicacao) {
+    // Verificar se já existe um botão
+    let botaoInfo = elemento.querySelector('.info-icon');
+    
+    if (!botaoInfo) {
+        botaoInfo = document.createElement('span');
+        botaoInfo.className = 'info-icon';
+        botaoInfo.innerHTML = 'i';
+        elemento.appendChild(botaoInfo);
+        
+        // Criar popup
+        const popup = document.createElement('div');
+        popup.className = 'explicacao-popup';
+        popup.innerHTML = textoExplicacao;
+        document.body.appendChild(popup);
+        
+        // Adicionar eventos
+        botaoInfo.addEventListener('click', function(e) {
+            e.stopPropagation();
+            console.log("Ícone de informação clicado!");
+            
+            // Fechar todos os outros popups
+            document.querySelectorAll('.explicacao-popup').forEach(p => {
+                if (p !== popup) {
+                    p.style.display = 'none';
+                }
+            });
+            
+            // Alternar visibilidade deste popup
+            if (popup.style.display === 'block') {
+                popup.style.display = 'none';
+            } else {
+                // Posicionar e mostrar este popup
+                const rect = botaoInfo.getBoundingClientRect();
+                popup.style.left = (rect.left - 200 + rect.width/2) + 'px'; // Centralizar
+                popup.style.top = (rect.bottom + 10) + 'px';
+                popup.style.display = 'block';
+                
+                console.log("Popup exibido em:", popup.style.left, popup.style.top);
+            }
+        });
+        
+        // Fechar ao clicar fora
+        document.addEventListener('click', function(e) {
+            if (e.target !== botaoInfo && !popup.contains(e.target)) {
+                popup.style.display = 'none';
+            }
+        });
+    }
+    
+    return botaoInfo;
+}
+
+// Textos de explicação (mantidos os mesmos)
+function getExplicacaoGeral() {
+    return `
+        <h4>Estatísticas Gerais de Intervalos</h4>
+        <p>Esta seção apresenta uma visão geral dos padrões de intervalo encontrados em todas as combinações de dígitos analisadas.</p>
+        
+        <p>A análise rastreia especificamente as "diferenças" ou "intervalos" entre aparições consecutivas das mesmas combinações de dígitos.</p>
+        
+        <p>As estatísticas mostram:</p>
+        <ul>
+            <li><strong>Média Geral:</strong> Quantos concursos, em média, entre repetições</li>
+            <li><strong>Total de Intervalos:</strong> Quantas observações foram analisadas</li>
+            <li><strong>Maior Frequência:</strong> Quantas vezes apareceu a combinação mais frequente</li>
+            <li><strong>Maior Intervalo:</strong> Maior número de concursos entre repetições</li>
+        </ul>
+    `;
+}
+
+function getExplicacaoPara(titulo) {
+    switch (titulo) {
+        case 'Média Geral':
+            return `
+                <h4>Média Geral de Intervalos</h4>
+                <p><strong>O que significa:</strong> Em média, uma mesma combinação específica de dígitos reaparece a cada X concursos.</p>
+                <p><strong>Interpretação:</strong> Este valor é calculado somando todos os intervalos detectados entre aparições repetidas de todas as combinações de dígitos e dividindo pelo número total de intervalos. É uma medida da "frequência média" com que os padrões se repetem.</p>
+                <p><strong>Relevância:</strong> Um valor alto indica que as combinações de dígitos tendem a demorar muitos concursos para se repetir, o que é esperado em um sorteio aleatório.</p>
+            `;
+        case 'Total de Intervalos':
+            return `
+                <h4>Total de Intervalos Analisados</h4>
+                <p><strong>O que significa:</strong> Foram detectados X casos onde uma combinação de dígitos apareceu e depois reapareceu em um concurso posterior.</p>
+                <p><strong>Interpretação:</strong> Cada intervalo representa uma observação de quanto tempo (em número de concursos) uma combinação levou para reaparecer.</p>
+                <p><strong>Relevância:</strong> Quanto maior este número, mais dados a análise possui, tornando as estatísticas mais confiáveis.</p>
+            `;
+        case 'Maior Frequência':
+            return `
+                <h4>Maior Frequência</h4>
+                <p><strong>O que significa:</strong> A combinação de dígitos mais comum apareceu em X concursos diferentes.</p>
+                <p><strong>Interpretação:</strong> Este valor mostra a combinação de dígitos que mais se repetiu na história dos sorteios analisados.</p>
+                <p><strong>Relevância:</strong> Esta combinação mais frequente (geralmente "0,1,2,3,4,5,6") representa a sequência de dígitos mais recorrente nos sorteios.</p>
+            `;
+        case 'Maior Intervalo':
+            return `
+                <h4>Maior Intervalo</h4>
+                <p><strong>O que significa:</strong> O maior "tempo de espera" observado entre duas aparições consecutivas da mesma combinação de dígitos foi de X concursos.</p>
+                <p><strong>Interpretação:</strong> Alguma combinação específica apareceu em um concurso e só voltou a aparecer muitos concursos depois.</p>
+                <p><strong>Relevância:</strong> Este valor extremo mostra como algumas combinações podem demorar muito para se repetir, destacando a variabilidade dos intervalos de repetição.</p>
+            `;
+        default:
+            return `<p>Informações estatísticas sobre a frequência de aparição dos dígitos nos sorteios da Mega-Sena.</p>`;
+    }
+}
+
+// Adicionar botão explícito para ativar as explicações
+function adicionarBotaoExplicacao() {
+    const estatisticasGerais = document.querySelector('.estatisticas-gerais');
+    if (estatisticasGerais) {
+        // Verificar se o botão já existe
+        let botaoExplicacao = document.getElementById('botao-explicacao');
+        
+        if (!botaoExplicacao) {
+            botaoExplicacao = document.createElement('button');
+            botaoExplicacao.id = 'botao-explicacao';
+            botaoExplicacao.textContent = 'Mostrar Explicações';
+            botaoExplicacao.className = 'button';
+            botaoExplicacao.style.marginTop = '10px';
+            botaoExplicacao.style.marginBottom = '10px';
+            botaoExplicacao.style.display = 'block';
+            
+            botaoExplicacao.addEventListener('click', function() {
+                console.log("Botão de explicações clicado");
+                alternarBotoesInformacao();
+            });
+            
+            estatisticasGerais.appendChild(botaoExplicacao);
+        }
+    }
+}
+
+// Função principal que será executada quando a página carregar
+function inicializarPopups() {
+    console.log("Inicializando sistema de explicações...");
+    
+    // Adicionar estilo ao documento
+    const style = document.createElement('style');
+    style.textContent = `
+        .info-icon {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            line-height: 18px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 5px;
+            cursor: pointer;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .explicacao-popup {
+            display: none;
+            position: fixed;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            max-width: 400px;
+            min-width: 300px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .explicacao-popup h4 {
+            margin-top: 0;
+            color: #4CAF50;
+        }
+        
+        .explicacao-popup ul {
+            padding-left: 20px;
+        }
+        
+        .explicacao-popup p {
+            margin: 10px 0;
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Verificar periodicamente se a seção de estatísticas já foi carregada
+    const checkExist = setInterval(function() {
+        const estatisticasGerais = document.querySelector('.estatisticas-gerais');
+        if (estatisticasGerais) {
+            console.log("Seção de estatísticas encontrada!");
+            clearInterval(checkExist);
+            adicionarBotaoExplicacao();
+        }
+    }, 1000); // Verificar a cada segundo
+}
+
+// Iniciar quando o documento estiver pronto
+document.addEventListener('DOMContentLoaded', inicializarPopups);
+
+
+
+#resumo-simples.js
+// Solução simplificada para adicionar botão e gerar resumo
+
+// Adicionar o botão quando a página carregar
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("Script de resumo simplificado carregado");
+    
+    // Função que adiciona o botão
+    function adicionarBotao() {
+        // Verificar se o botão já existe
+        if (document.getElementById('botaoAnalisarFrequencias')) {
+            return;
+        }
+        
+        // Criar o botão
+        const botao = document.createElement('button');
+        botao.id = 'botaoAnalisarFrequencias';
+        botao.className = 'button';
+        botao.textContent = 'Resumo';
+        
+        // Adicionar evento de clique
+        botao.addEventListener('click', function() {
+            console.log("Botão clicado - gerando resumo");
+            gerarResumo();
+        });
+        
+        // Encontrar um local para adicionar o botão
+        const actionsContainer = document.querySelector('.actions');
+        if (actionsContainer) {
+            actionsContainer.appendChild(botao);
+            console.log("Botão adicionado à seção .actions");
+        } else {
+            // Alternativa: adicionar antes da tabela
+            const tabela = document.getElementById('diaDeSorteResults');
+            if (tabela) {
+                const div = document.createElement('div');
+                div.className = 'actions';
+                div.style.textAlign = 'center';
+                div.style.margin = '20px 0';
+                div.appendChild(botao);
+                
+                tabela.parentNode.insertBefore(div, tabela);
+                console.log("Botão adicionado antes da tabela");
+            } else {
+                console.log("Não foi possível encontrar um local para o botão");
+            }
+        }
+    }
+    
+    // Adicionar o botão após um tempo para garantir que a página carregou
+    setTimeout(adicionarBotao, 1000);
+    
+    // Tentar adicionar novamente quando a mensagem de carregamento completado aparecer
+    const verificarCarregamento = setInterval(function() {
+        const mensagemCompletada = document.getElementById('completedMessage');
+        if (mensagemCompletada && getComputedStyle(mensagemCompletada).display !== 'none') {
+            console.log("Carregamento completado detectado");
+            adicionarBotao();
+            clearInterval(verificarCarregamento);
+        }
+    }, 1000);
+    
+    // Limitar a verificação a 20 segundos
+    setTimeout(function() {
+        clearInterval(verificarCarregamento);
+    }, 20000);
+});
+
+// Função para gerar o resumo
+function gerarResumo() {
+    console.log("Início da geração do resumo");
+    
+    // Remover resumo anterior, se existir
+    const resumoAnterior = document.getElementById('resumo');
+    if (resumoAnterior) {
+        resumoAnterior.remove();
+        console.log("Resumo anterior removido");
+    }
+    
+    // Criar o resumo
+    const resumo = document.createElement('div');
+    resumo.id = 'resumo';
+    resumo.style.margin = '30px 0';
+    resumo.style.padding = '20px';
+    resumo.style.backgroundColor = '#f9f9f9';
+    resumo.style.borderRadius = '8px';
+    resumo.style.border = '2px solid #673AB7';
+    resumo.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+    
+    // Valores padrão atualizados com base na tabela fornecida
+    let combinacao = '0,1,2,3,5,7,9';
+    let frequencia = 22;
+    let intervaloMedio = 41;  // Corrigido de 13 para 41
+    let menorIntervalo = 3;   // Corrigido de 1 para 3
+    let maiorIntervalo = 121; // Corrigido de 38 para 121
+    let ultimoIntervalo = 38; // Corrigido de 13 para 38
+    
+    // Tentar extrair dados reais da tabela
+    try {
+        console.log("Tentando extrair dados da tabela de combinações");
+        const tabelaCombinacoes = document.querySelector('.combinations-table');
+        
+        if (tabelaCombinacoes) {
+            console.log("Tabela de combinações encontrada");
+            const linhasTabela = tabelaCombinacoes.querySelectorAll('tbody tr');
+            
+            if (linhasTabela && linhasTabela.length > 0) {
+                console.log(`Encontradas ${linhasTabela.length} linhas na tabela`);
+                
+                // Pegar a primeira linha (combinação mais frequente)
+                const primeiraLinha = linhasTabela[0];
+                const colunas = primeiraLinha.querySelectorAll('td');
+                
+                console.log(`Colunas na primeira linha: ${colunas.length}`);
+                
+                if (colunas.length >= 7) {
+                    // Extrair valores específicos de cada coluna
+                    combinacao = colunas[0].textContent.trim();
+                    frequencia = parseInt(colunas[2].textContent) || frequencia;
+                    intervaloMedio = parseInt(colunas[3].textContent) || intervaloMedio;
+                    menorIntervalo = parseInt(colunas[4].textContent) || menorIntervalo;
+                    maiorIntervalo = parseInt(colunas[5].textContent) || maiorIntervalo;
+                    ultimoIntervalo = parseInt(colunas[6].textContent) || ultimoIntervalo;
+                    
+                    console.log("Dados extraídos com sucesso da tabela:");
+                    console.log(`Combinação: ${combinacao}`);
+                    console.log(`Frequência: ${frequencia}`);
+                    console.log(`Intervalo Médio: ${intervaloMedio}`);
+                    console.log(`Menor Intervalo: ${menorIntervalo}`);
+                    console.log(`Maior Intervalo: ${maiorIntervalo}`);
+                    console.log(`Último Intervalo: ${ultimoIntervalo}`);
+                } else {
+                    console.log(`Número insuficiente de colunas: ${colunas.length}, esperado pelo menos 7`);
+                }
+            } else {
+                console.log("Nenhuma linha encontrada na tabela");
+            }
+        } else {
+            console.log("Tabela de combinações não encontrada");
+        }
+    } catch (e) {
+        console.error("Erro ao extrair dados da tabela:", e);
+    }
+    
+    // Conteúdo do resumo
+    resumo.innerHTML = `
+    <h2 style="color: rebeccapurple;">RESUMO GERAL</h2>
+    <p>A análise dos dados mostra que a combinação <strong>${combinacao}</strong> apareceu <strong>${frequencia} vezes</strong> nos concursos do Dia de Sorte, com um intervalo médio de <strong>${intervaloMedio} concursos</strong> entre suas aparições. A menor sequência entre ocorrências foi de apenas <strong>${menorIntervalo} concursos</strong>, e a maior chegou a <strong>${maiorIntervalo} concursos</strong>.</p>
+    
+    <h2 style="color: red;">Estratégia de Aposta Recomendada:</h2>
+    
+    <ol>
+        <li>
+            <strong>Acompanhar o Intervalo Médio</strong>
+            <p>Como a média entre aparições é de <strong>${intervaloMedio} concursos</strong>, um bom momento para apostar nessa sequência seria quando ela já estiver sem sair por algo próximo a esse número de concursos.</p>
+        </li>
+        <li>
+            <strong>Apostar com Maior Frequência quando o Intervalo Estiver Próximo da Média</strong>
+            <p>Se o intervalo entre as aparições da sequência atingir <strong>${Math.floor(intervaloMedio * 0.8)} a ${Math.ceil(intervaloMedio * 1.2)} concursos</strong>, pode ser um bom indicativo de que ela tem uma boa chance de sair.</p>
+        </li>
+        <li>
+            <strong>Monitorar o Último Intervalo</strong>
+            <p>O último intervalo registrado foi de <strong>${ultimoIntervalo} concursos</strong>, o que indica que pode haver uma tendência de repetição em períodos mais curtos.</p>
+        </li>
+        <li>
+            <strong>Variar os Números Dentro da Combinação</strong>
+            <p>Algumas combinações semelhantes (ex.: trocando o número <strong>9 por 6 ou 8</strong>) também aparecem frequentemente. Fazer apostas variando um ou dois números pode aumentar as chances.</p>
+        </li>
+        <li>
+            <strong>Evitar Apostar Quando a Sequência Saiu Recentemente</strong>
+            <p>Se essa sequência apareceu nos últimos <strong>5 a 10 concursos</strong>, a chance de repetição imediata pode ser menor.</p>
+        </li>
+    </ol>
+    
+    <h2>Conclusão:</h2>
+    
+    <p>Se a combinação <strong>${combinacao}</strong> estiver sem aparecer por <strong>${intervaloMedio} concursos ou mais</strong>, pode valer a pena apostar nela ou em variações próximas. Caso tenha saído recentemente, melhor esperar mais alguns concursos antes de apostar nessa combinação novamente.</p>
+    
+    <p>Esta análise é baseada em padrões históricos e não garante resultados futuros. O Dia de Sorte é um jogo de sorte com resultados aleatórios.</p>
+`;
+
+    
+    // Adicionar o resumo à página
+    const botao = document.getElementById('botaoAnalisarFrequencias');
+    if (botao) {
+        // Adicionar após o container do botão
+        const container = botao.closest('.actions');
+        if (container) {
+            container.parentNode.insertBefore(resumo, container.nextSibling);
+        } else {
+            botao.parentNode.insertBefore(resumo, botao.nextSibling);
+        }
+    } else {
+        // Adicionar antes da tabela se o botão não for encontrado
+        const tabela = document.getElementById('diaDeSorteResults');
+        if (tabela) {
+            tabela.parentNode.insertBefore(resumo, tabela);
+        } else {
+            // Última opção: adicionar ao final do container principal
+            const container = document.querySelector('.container');
+            if (container) {
+                container.appendChild(resumo);
+            } else {
+                console.error("Não foi possível encontrar um local para inserir o resumo");
+                alert("Não foi possível exibir o resumo. Verifique o console para mais detalhes.");
+                return;
+            }
+        }
+    }
+    
+    // Rolar até o resumo
+    resumo.scrollIntoView({ behavior: 'smooth' });
+    
+    console.log("Resumo gerado com sucesso");
+}
+
+
+
+#script.js
 document.addEventListener('DOMContentLoaded', function() {
     const loadButton = document.getElementById('loadButton');
     const downloadCSVButton = document.getElementById('downloadCSV');
@@ -1184,7 +1828,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		
         const loadingMessage = document.getElementById('loadingMessage');
         const completedMessage = document.getElementById('completedMessage');
-        const tableBody = document.getElementById('megaSenaResults').getElementsByTagName('tbody')[0];
+        const tableBody = document.getElementById('diaDeSorteResults').getElementsByTagName('tbody')[0];
         const digitFrequencyDiv = document.getElementById('digitFrequency');
         const digitChartDiv = document.getElementById('digitChart');
         const combinationAnalysisDiv = document.getElementById('combinationAnalysis');
@@ -1323,8 +1967,35 @@ document.addEventListener('DOMContentLoaded', function() {
             combo.similares = combo.similares.slice(0, 5);
         }
         
+        // Calcular estatísticas adicionais para as combinações frequentes
+        combinationStats.combinacoesFrequentes.forEach(combo => {
+            // Ordenar concursos
+            combo.concursos.sort((a, b) => a - b);
+            
+            // Calcular intervalos
+            const intervalos = [];
+            for (let i = 1; i < combo.concursos.length; i++) {
+                intervalos.push(combo.concursos[i] - combo.concursos[i-1]);
+            }
+            
+            if (intervalos.length > 0) {
+                combo.intervalos = intervalos;
+                combo.mediaIntervalos = Math.round(intervalos.reduce((a, b) => a + b, 0) / intervalos.length);
+                combo.menorIntervalo = Math.min(...intervalos);
+                combo.maiorIntervalo = Math.max(...intervalos);
+                combo.ultimoIntervalo = intervalos[intervalos.length - 1];
+            }
+        });
+        
         // Limitar as combinações mais frequentes às top 10
         combinationStats.combinacoesFrequentes = combinationStats.combinacoesFrequentes.slice(0, 10);
+        
+        // Compartilhar resultados analisados no escopo global para uso pelo resumo-simples.js
+        window.resultadosAnalisados = {
+            combinacoesOrdenadas: combinationStats.combinacoesFrequentes,
+            mediaGeral: combinationStats.combinacoesFrequentes.reduce((acc, c) => acc + (c.mediaIntervalos || 0), 0) / 
+                        combinationStats.combinacoesFrequentes.filter(c => c.mediaIntervalos).length
+        };
     }
     
     // Função para renderizar opções de filtro
@@ -1487,14 +2158,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const combinacoesTable = document.createElement('table');
         combinacoesTable.className = 'combinations-table';
         
-        // Cabeçalho da tabela
-        const headerRow = document.createElement('tr');
-        ['Combinação', 'Qtd. Dígitos', 'Frequência', 'Detalhes'].forEach(text => {
-            const th = document.createElement('th');
-            th.textContent = text;
-            headerRow.appendChild(th);
-        });
-        combinacoesTable.appendChild(headerRow);
+		// Cabeçalho da tabela
+		const headerRow = document.createElement('tr');
+		[
+			'Combinação', 
+			'Qtd. Dígitos', 
+			'Frequência', 
+			'Detalhes'
+		].forEach(text => {
+			const th = document.createElement('th');
+			th.textContent = text;
+			headerRow.appendChild(th);
+		});        combinacoesTable.appendChild(headerRow);
         
         // Dados da tabela
         combinationStats.combinacoesFrequentes.forEach(combo => {
@@ -1605,7 +2280,58 @@ document.addEventListener('DOMContentLoaded', function() {
         infoDiv.innerHTML = `
             <p><strong>Quantidade de dígitos:</strong> ${combo.quantidade}</p>
             <p><strong>Aparece em ${combo.concursos.length} concursos:</strong> ${combo.concursos.join(', ')}</p>
+            <p><strong>Média de intervalo:</strong> ${combo.mediaIntervalos || '-'} concursos</p>
+            <p><strong>Menor intervalo:</strong> ${combo.menorIntervalo || '-'} concursos</p>
+            <p><strong>Maior intervalo:</strong> ${combo.maiorIntervalo || '-'} concursos</p>
+            <p><strong>Último intervalo:</strong> ${combo.ultimoIntervalo || '-'} concursos</p>
         `;
+        
+        // Intervalos entre concursos
+        if (combo.intervalos && combo.intervalos.length > 0) {
+            const intervalosDiv = document.createElement('div');
+            intervalosDiv.className = 'intervalos-info';
+            
+            const intervalosTitle = document.createElement('h4');
+            intervalosTitle.textContent = 'Intervalos entre Concursos';
+            intervalosDiv.appendChild(intervalosTitle);
+            
+            const intervalosTable = document.createElement('table');
+            intervalosTable.className = 'intervalos-table';
+            
+            // Cabeçalho
+            const headerRow = document.createElement('tr');
+            ['De Concurso', 'Para Concurso', 'Intervalo'].forEach(text => {
+                const th = document.createElement('th');
+                th.textContent = text;
+                headerRow.appendChild(th);
+            });
+            intervalosTable.appendChild(headerRow);
+            
+            // Dados de intervalos
+            for (let i = 1; i < combo.concursos.length; i++) {
+                const row = document.createElement('tr');
+                
+                // De concurso
+                const tdDe = document.createElement('td');
+                tdDe.textContent = combo.concursos[i-1];
+                row.appendChild(tdDe);
+                
+                // Para concurso
+                const tdPara = document.createElement('td');
+                tdPara.textContent = combo.concursos[i];
+                row.appendChild(tdPara);
+                
+                // Intervalo
+                const tdIntervalo = document.createElement('td');
+                tdIntervalo.textContent = combo.concursos[i] - combo.concursos[i-1];
+                row.appendChild(tdIntervalo);
+                
+                intervalosTable.appendChild(row);
+            }
+            
+            intervalosDiv.appendChild(intervalosTable);
+            infoDiv.appendChild(intervalosDiv);
+        }
         
         // Combinações similares
         const similaresDiv = document.createElement('div');
@@ -1687,7 +2413,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Função para renderizar os resultados na tabela
     function renderResults(results) {
-        const tableBody = document.getElementById('megaSenaResults').getElementsByTagName('tbody')[0];
+        const tableBody = document.getElementById('diaDeSorteResults').getElementsByTagName('tbody')[0];
         tableBody.innerHTML = '';
         
         // Atualizar informação sobre resultados filtrados
@@ -1699,8 +2425,8 @@ document.addEventListener('DOMContentLoaded', function() {
             infoDiv.textContent = `Exibindo ${results.length} de ${allResults.length} resultados`;
             
             // Inserir antes da tabela
-            const tableContainer = document.getElementById('megaSenaResults').parentNode;
-            tableContainer.insertBefore(infoDiv, document.getElementById('megaSenaResults'));
+            const tableContainer = document.getElementById('diaDeSorteResults').parentNode;
+            tableContainer.insertBefore(infoDiv, document.getElementById('diaDeSorteResults'));
         } else {
             resultsInfoDiv.textContent = `Exibindo ${results.length} de ${allResults.length} resultados`;
         }
@@ -1796,7 +2522,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Criando uma tabela HTML que o Excel pode importar corretamente
     let excelContent = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">';
-    excelContent += '<head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Dígitos Mega-Sena</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->';
+    excelContent += '<head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Dígitos Dia de Sorte</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->';
     excelContent += '<style>th { background-color: #000000; color: #ffffff; text-align: left; font-weight: bold; } td { text-align: left; } .concurso { mso-number-format:"0"; }</style>';
     excelContent += '</head>';
     excelContent += '<body><table border="1">';
@@ -1829,7 +2555,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const blob = new Blob([excelContent], {type: 'application/vnd.ms-excel'});
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = 'analise_digitos_megasena.xls';
+    link.download = 'analise_digitos_diadesorte.xls';
     link.click();
 }
    
@@ -1846,7 +2572,7 @@ function downloadJSON() {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Análise de Dígitos da Mega-Sena</title>
+        <title>Análise de Dígitos do Dia de Sorte</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -1923,7 +2649,7 @@ function downloadJSON() {
     </head>
     <body>
         <div class="container">
-            <h1>Análise de Dígitos da Mega-Sena</h1>
+            <h1>Análise de Dígitos do Dia de Sorte</h1>
             
             <div class="section">
                 <h2>Estatísticas de Frequência dos Dígitos</h2>
@@ -2077,7 +2803,7 @@ function downloadJSON() {
     const blob = new Blob([htmlContent], {type: 'text/html;charset=utf-8'});
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = 'analise_digitos_megasena.html';
+    link.download = 'analise_digitos_diadesorte.html';
     link.click();
 }    
     function downloadTXT() {
@@ -2086,7 +2812,7 @@ function downloadJSON() {
             return;
         }
         
-        let txtContent = "Análise de Dígitos da Mega-Sena\n\n";
+        let txtContent = "Análise de Dígitos do Dia de Sorte\n\n";
         
         // Adicionar estatísticas - ordenar por frequência para o arquivo TXT também
         txtContent += "ESTATÍSTICAS DE FREQUÊNCIA DOS DÍGITOS (ORDEM DECRESCENTE):\n";
@@ -2121,7 +2847,12 @@ function downloadJSON() {
             txtContent += `Quantidade: ${result.contagem_digitos}\n`;
         });
         
-        downloadFile(txtContent, 'analise_digitos_megasena.txt', 'text/plain');
+        // Criar o blob com tipo MIME para texto
+        const blob = new Blob([txtContent], {type: 'text/plain;charset=utf-8'});
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = 'analise_digitos_diadesorte.txt';
+        link.click();
     }
 	
 	// Função auxiliar para download de arquivos
@@ -2134,313 +2865,876 @@ function downloadJSON() {
     console.log("Download iniciado:", fileName);
 	}
 	
-	});
-	
-	/**
- * Script para destacar apenas os valores máximos em cada estatística
- */
-
-
-
-// Função para destacar o dígito com maior frequência
-function highlightMaxDigit() {
-    const digitBoxes = document.querySelectorAll('.digit-box');
-    if (digitBoxes.length === 0) return;
-    
-    let maxValue = 0;
-    let maxElement = null;
-    
-    // Encontrar o valor máximo
-    digitBoxes.forEach(box => {
-        const valueElem = box.querySelector('.digit-count');
-        if (valueElem) {
-            const value = parseInt(valueElem.textContent.replace(/\D/g, ''));
-            if (!isNaN(value) && value > maxValue) {
-                maxValue = value;
-                maxElement = box;
-            }
-        }
-    });
-    
-    // Aplicar destaque
-    if (maxElement) {
-        console.log("Destacando dígito com valor máximo:", maxValue);
-        maxElement.style.backgroundColor = '#d9534f'; // Vermelho
-        maxElement.style.transform = 'scale(1.1)';
-        maxElement.style.boxShadow = '0 0 8px rgba(217, 83, 79, 0.7)';
-        
-        const valueElem = maxElement.querySelector('.digit-count');
-        if (valueElem) {
-            valueElem.style.fontWeight = 'bold';
-            valueElem.style.fontSize = '110%';
-            valueElem.style.color = '#fff';
-        }
-    }
-}
-
-// Função para destacar o valor máximo no gráfico de frequência
-function highlightMaxInFrequencyChart() {
-    const chartRows = document.querySelectorAll('#digitChart > div');
-    if (chartRows.length === 0) return;
-    
-    let maxValue = 0;
-    let maxRow = null;
-    
-    // Encontrar a linha com valor máximo
-    chartRows.forEach(row => {
-        const valueElem = row.querySelector('div > div:last-child');
-        if (valueElem) {
-            const value = parseInt(valueElem.textContent.replace(/\D/g, ''));
-            if (!isNaN(value) && value > maxValue) {
-                maxValue = value;
-                maxRow = row;
-            }
-        }
-    });
-    
-    // Aplicar destaque
-    if (maxRow) {
-        console.log("Destacando valor máximo no gráfico:", maxValue);
-        
-        // Destacar o valor
-        const valueElem = maxRow.querySelector('div > div:last-child');
-        if (valueElem) {
-            valueElem.style.fontWeight = 'bold';
-            valueElem.style.color = '#d9534f';
-            valueElem.style.fontSize = '110%';
-        }
-        
-        // Destacar a barra
-        const barElem = maxRow.querySelector('div > div:nth-child(2) > div');
-        if (barElem) {
-            barElem.style.backgroundColor = '#d9534f';
-            barElem.style.height = '24px'; // Ligeiramente maior
-        }
-        
-        // Destacar o fundo da linha inteira
-        maxRow.style.backgroundColor = 'rgba(217, 83, 79, 0.1)';
-        maxRow.style.borderRadius = '4px';
-        maxRow.style.padding = '2px 0';
-    }
-}
-
-// Função para destacar o valor máximo em uma tabela
-function highlightMaxInTable(tableSelector, columnIndex) {
-    const table = document.querySelector(tableSelector);
-    if (!table) {
-        console.log(`Tabela não encontrada: ${tableSelector}`);
-        return;
-    }
-    
-    const rows = table.querySelectorAll('tbody tr');
-    if (rows.length === 0) {
-        console.log(`Nenhuma linha encontrada na tabela: ${tableSelector}`);
-        return;
-    }
-    
-    let maxValue = 0;
-    let maxRow = null;
-    
-    // Encontrar a linha com valor máximo
-    rows.forEach(row => {
-        if (row.cells.length > columnIndex) {
-            const cell = row.cells[columnIndex];
-            const value = parseInt(cell.textContent.replace(/\D/g, ''));
-            if (!isNaN(value) && value > maxValue) {
-                maxValue = value;
-                maxRow = row;
-            }
-        }
-    });
-    
-    // Aplicar destaque
-    if (maxRow) {
-        console.log(`Destacando valor máximo (${maxValue}) na tabela ${tableSelector}`);
-        
-        // Destacar a linha inteira
-        maxRow.style.backgroundColor = 'rgba(217, 83, 79, 0.15)';
-        
-        // Destacar a célula do valor
-        const valueCell = maxRow.cells[columnIndex];
-        if (valueCell) {
-            valueCell.style.fontWeight = 'bold';
-            valueCell.style.color = '#d9534f';
-            valueCell.style.fontSize = '110%';
-        }
-    }
-}
-
-// Adicionar a função ao carregamento da página e ao clicar no botão de carregar
-document.addEventListener('DOMContentLoaded', function() {
-    // Executar após um pequeno atraso para garantir que os elementos estejam carregados
-    setTimeout(highlightMaxValues, 500);
-    
-    // Adicionar ao botão de carregar
-    const loadButton = document.getElementById('loadButton');
-    if (loadButton) {
-        const originalHandler = loadButton.onclick;
-        loadButton.onclick = function(e) {
-            if (typeof originalHandler === 'function') {
-                originalHandler.call(this, e);
-            }
-            
-            // Executar nosso código após um pequeno atraso para os dados serem processados
-            setTimeout(highlightMaxValues, 1000);
-        };
-    }
 });
 
-// Adicionar CSS necessário para os destaques
-function addHighlightStyles() {
-    const style = document.createElement('style');
-    style.textContent = `
-        /* Estilos para transição suave de destaques */
-        .digit-box, .digit-count, #digitChart div, 
-        .combinations-table tr, .summary-table tr, .similares-table tr,
-        .combinations-table td, .summary-table td, .similares-table td {
-            transition: all 0.3s ease;
+
+
+#tabelas-responsivas.js
+/**
+ * Script para tornar as tabelas responsivas
+ * Adicione este arquivo como tabelas-responsivas.js ou incorpore no seu script.js existente
+ */
+
+// Executar quando o documento estiver carregado
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Script de tabelas responsivas carregado');
+    
+    // Aguardar um momento para garantir que as tabelas foram renderizadas
+    setTimeout(function() {
+        tornarTabelasResponsivas();
+    }, 1000);
+    
+    // Adicionar um observador para quando os dados forem carregados
+    const verificarCarregamento = setInterval(function() {
+        const mensagemCompletada = document.getElementById('completedMessage');
+        if (mensagemCompletada && getComputedStyle(mensagemCompletada).display !== 'none') {
+            console.log('Carregamento detectado, aplicando responsividade às tabelas');
+            setTimeout(function() {
+                tornarTabelasResponsivas();
+            }, 500);
+            clearInterval(verificarCarregamento);
         }
-    `;
-    document.head.appendChild(style);
+    }, 1000);
+    
+    // Limitar a verificação a 30 segundos
+    setTimeout(function() {
+        clearInterval(verificarCarregamento);
+    }, 30000);
+    
+    // Se existir um botão de carregar, adicionar um listener para tornar as tabelas responsivas após o carregamento
+    const loadButton = document.getElementById('loadButton');
+    if (loadButton) {
+        loadButton.addEventListener('click', function() {
+            console.log('Botão de carregar clicado, aguardando para tornar tabelas responsivas');
+            setTimeout(function() {
+                tornarTabelasResponsivas();
+            }, 2000);
+        });
+    }
+    
+    // Se existir um botão de análise de frequências, adicionar um listener
+    document.addEventListener('click', function(event) {
+        if (event.target && (event.target.id === 'botaoAnalisarFrequencias' || event.target.id === 'botaoManual')) {
+            console.log('Botão de análise clicado, aguardando para tornar tabelas responsivas');
+            setTimeout(function() {
+                tornarTabelasResponsivas();
+            }, 1000);
+        }
+    });
+});
+
+// Função principal para tornar as tabelas responsivas
+function tornarTabelasResponsivas() {
+    console.log('Aplicando responsividade às tabelas');
+    
+    // Lista de seletores de tabelas para tornar responsivas
+    const seletoresTabelas = [
+        '#megaSenaResults',
+        '.combinations-table',
+        '.summary-table',
+        '.frequency-table',
+        '.similares-table',
+        '.interval-table'
+    ];
+    
+    // Processar cada seletor
+    seletoresTabelas.forEach(function(seletor) {
+        const tabelas = document.querySelectorAll(seletor);
+        
+        tabelas.forEach(function(tabela) {
+            // Verificar se a tabela já está em um container responsivo
+            if (!tabela.parentElement.classList.contains('table-responsive')) {
+                console.log('Tornando responsiva a tabela:', seletor);
+                
+                // Criar um container responsivo
+                const container = document.createElement('div');
+                container.className = 'table-responsive';
+                
+                // Substituir a tabela pelo container contendo a tabela
+                tabela.parentNode.insertBefore(container, tabela);
+                container.appendChild(tabela);
+                
+                // Adicionar indicadores de rolagem
+                adicionarIndicadoresRolagem(container);
+            }
+        });
+    });
+    
+    console.log('Todas as tabelas foram processadas');
 }
 
-// Adicionar estilos
-addHighlightStyles();
+// Função para adicionar indicadores visuais de rolagem horizontal
+function adicionarIndicadoresRolagem(container) {
+    // Verificar se o conteúdo é maior que o container
+    const verificarRolagem = function() {
+        if (container.scrollWidth > container.clientWidth) {
+            container.classList.add('has-scroll');
+            
+            // Adicionar classe quando rolar horizontalmente
+            container.addEventListener('scroll', function() {
+                if (container.scrollLeft > 0) {
+                    container.classList.add('is-scrolling');
+                } else {
+                    container.classList.remove('is-scrolling');
+                }
+                
+                // Adicionar classe quando chegar ao final da rolagem
+                if (Math.ceil(container.scrollLeft + container.clientWidth) >= container.scrollWidth) {
+                    container.classList.add('scroll-end');
+                } else {
+                    container.classList.remove('scroll-end');
+                }
+            });
+        } else {
+            container.classList.remove('has-scroll');
+        }
+    };
+    
+    // Verificar inicialmente
+    verificarRolagem();
+    
+    // Verificar novamente quando a janela for redimensionada
+    window.addEventListener('resize', verificarRolagem);
+}
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dígitos Mega-Sena</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/popup-style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/tabelas-responsivas.css') }}">
-</head>
-<body>
-    <div class="container">
-        <h1>Análise de Dígitos da Mega-Sena</h1>
+// Adicionar eventos para reajustar as tabelas quando necessário
+window.addEventListener('resize', function() {
+    // Atualizar indicadores de rolagem para todas as tabelas responsivas
+    document.querySelectorAll('.table-responsive').forEach(function(container) {
+        if (container.scrollWidth > container.clientWidth) {
+            container.classList.add('has-scroll');
+        } else {
+            container.classList.remove('has-scroll');
+        }
+    });
+});
+
+
+
+#popup-style.css
+.info-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #4CAF50;
+  color: white;
+  text-align: center;
+  line-height: 16px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.explicacao-popup {
+  display: none;
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+  max-width: 400px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.explicacao-popup h4 {
+  margin-top: 0;
+  color: #4CAF50;
+}
+
+.explicacao-popup ul {
+  padding-left: 20px;
+}
+
+.explicacao-popup p {
+  margin: 10px 0;
+}
+
+
+
+#styles.css
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #FFFFFF;
+    color: #2E8B57;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1, h2, h3 {
+    text-align: center;
+    color: #006400;
+}
+
+.centralizado {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.button {
+    background-color: #32CD32;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #28a745;
+}
+
+.loading, .completed {
+    text-align: center;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+.completed {
+    color: red;
+}
+
+/* Estilos para a tabela */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #F0F8FF;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #4CAF50;
+    font-size: small;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #F9F9F9;
+}
+
+tr:nth-child(odd) {
+    background-color: #FFFFFF;
+}
+
+.copy-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.copy-button:hover {
+    background-color: #45a049;
+}
+
+/* EstatÃ­sticas de dÃ­gitos */
+.statistics-container {
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #f0f8ff;
+    border-radius: 5px;
+    border: 1px solid #4CAF50;
+}
+
+.digit-stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.digit-frequency, .digit-charts {
+    flex: 1;
+    min-width: 300px;
+    margin: 10px;
+}
+
+.digit-box {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    margin: 5px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 50%;
+    font-weight: bold;
+}
+
+.digit-count {
+    font-size: 14px;
+    display: block;
+    color: #333;
+}
+
+.download-buttons {
+    margin: 20px 0;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 10px;
+    font-size: 14px;
+    color: #666;
+}
+/* Estilos para filtros */
+.filter-container {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f0f8ff;
+    border-radius: 5px;
+    border: 1px solid #4CAF50;
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+.filter-item {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.filter-item label {
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+.filter-item select {
+    padding: 5px;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+}
+
+.results-info {
+    margin: 10px 0;
+    font-style: italic;
+    color: #666;
+}
+
+/* Estilos para análise de combinações */
+.combination-analysis {
+    margin: 30px 0;
+}
+
+.combinations-table, .summary-table, .similares-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+}
+
+.details-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.details-button:hover {
+    background-color: #45a049;
+}
+
+/* Estilos para modal */
+.modal {
+    display: block;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 800px;
+    border-radius: 5px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    color: black;
+}
+
+.diferencas .de {
+    color: #d9534f;
+}
+
+.diferencas .para {
+    color: #5bc0de;
+}
+
+.combo-info, .similares-info {
+    margin: 15px 0;
+}
+/* Estilos para destacar valores máximos */
+
+/* Transições suaves para todos os elementos */
+.digit-box, .digit-count, #digitChart div, 
+.combinations-table tr, .summary-table tr, .similares-table tr,
+.combinations-table td, .summary-table td, .similares-table td {
+    transition: all 0.3s ease;
+}
+
+/* Caixa de dígito destacada */
+.digit-box-highlighted {
+    background-color: #d9534f !important;
+    transform: scale(1.1);
+    box-shadow: 0 0 8px rgba(217, 83, 79, 0.7);
+    z-index: 2;
+    position: relative;
+}
+
+.digit-box-highlighted .digit-count {
+    font-weight: bold;
+    color: white !important;
+}
+
+/* Linha de tabela destacada */
+.row-highlighted {
+    background-color: rgba(217, 83, 79, 0.15) !important;
+}
+
+/* Célula destacada */
+.cell-highlighted {
+    font-weight: bold !important;
+    color: #d9534f !important;
+    font-size: 110% !important;
+}
+
+/* Barra de gráfico destacada */
+.bar-highlighted {
+    background-color: #d9534f !important;
+    height: 24px !important;
+}
+#resumo{
+    font-family: 'Courier New', Courier, monospace;
+    color: #333;
+    margin-left: 10%;
+    margin-right: 10%;
+    text-align: justify;
+}
+.destaque {
+    color: red;
+}
+
+/* Responsividade melhorada */
+@media (max-width: 768px) {
+    .filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-item {
+        margin: 5px 0;
+        width: 100%;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+    }
+}
+
+
+#tabelas-responsivas.css
+/* 
+ * CSS para tornar tabelas responsivas com barra de rolagem horizontal 
+ * Adicione este código ao seu arquivo styles.css existente
+ */
+
+/* Estilo para containers de tabelas responsivas */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 1rem;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+
+/* Indicadores visuais de rolagem horizontal */
+.table-responsive::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 5px;
+    background: linear-gradient(to right, transparent, rgba(76, 175, 80, 0.3));
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.table-responsive:hover::after {
+    opacity: 1;
+}
+
+/* Estilos específicos para cada tabela */
+#megaSenaResults, 
+.combinations-table, 
+.summary-table, 
+.frequency-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Ajustes para o container do resumo em telas pequenas */
+@media screen and (max-width: 768px) {
+    #resumo {
+        padding: 15px;
+    }
+    
+    #resumo h2 {
+        font-size: 1.2rem;
+    }
+    
+    #resumo p,
+    #resumo li {
+        font-size: 0.9rem;
+    }
+}
+
+/* Fix para botões em telas pequenas */
+@media screen and (max-width: 480px) {
+    .button {
+        padding: 8px 12px;
+        font-size: 14px;
+        margin: 5px;
+    }
+    
+    .actions {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+/* Ajustes para tornar tabelas mais compactas em telas pequenas 
+@media screen and (max-width: 768px) {
+    .table-responsive table {
+        min-width: 650px; /* Garante que a tabela tenha um tamanho mínimo para necessitar rolagem 
+    }
+    
+    .table-responsive th,
+    .table-responsive td {
+        padding: 8px 5px;
+        font-size: clamp(10px, 2vw, 12px);
+    }
+    
+    .table-responsive th {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background-color: #4CAF50;
+    }
+}
+*/
+/* Para telas menores que 1024px (tablets e laptops pequenos) */
+@media screen and (max-width: 1024px) {
+    .table-responsive table {
+        min-width: 700px;
+    }
+
+    .table-responsive th,
+    .table-responsive td {
+        padding: 10px 6px;
+        font-size: clamp(11px, 2vw, 14px);
+    }
+
+    .table-responsive th {
+        background-color: #45A049;
+    }
+}
+
+/* Para telas menores que 768px (tablets e celulares grandes) */
+@media screen and (max-width: 768px) {
+    .table-responsive table {
+        min-width: 650px;
+    }
+
+    .table-responsive th,
+    .table-responsive td {
+        padding: 8px 5px;
+        font-size: clamp(10px, 2vw, 12px);
+    }
+
+    .table-responsive th {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background-color: #4CAF50;
+    }
+}
+
+/* Para telas menores que 480px (celulares pequenos) */
+@media screen and (max-width: 480px) {
+    .table-responsive table {
+        min-width: 600px;
+    }
+
+    .table-responsive th,
+    .table-responsive td {
+        padding: 6px 4px;
+        font-size: clamp(9px, 2vw, 11px);
+    }
+
+    .table-responsive th {
+        background-color: #3E8E41;
+    }
+}
+
+/* Para telas menores que 360px (celulares muito pequenos) */
+@media screen and (max-width: 360px) {
+    .table-responsive table {
+        min-width: 550px;
+    }
+
+    .table-responsive th,
+    .table-responsive td {
+        padding: 5px 3px;
+        font-size: clamp(8px, 2vw, 10px);
+    }
+
+    .table-responsive th {
+        background-color: #2E7D32;
+    }
+}
+
+
+
+#routes.py
+from flask import render_template, jsonify, request
+from app import app
+import requests
+import redis
+import os
+import json
+import logging
+
+#API_BASE_URL = os.getenv('API_BASE_URL', 'https://loteriascaixa-api.herokuapp.com/api')
+
+# Configurar logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
+# Configurações do Redis
+REDIS_HOST = os.getenv('REDIS_HOST')
+REDIS_PORT = os.getenv('REDIS_PORT')
+REDIS_PASSWORD = os.getenv('REDIS_PASSWORD')
+REDIS_DB = os.getenv('REDIS_DB', '0')
+API_BASE_URL = os.getenv('API_BASE_URL')
+
+logger.info(f"Configurações carregadas: HOST={REDIS_HOST}, PORT={REDIS_PORT}, API={API_BASE_URL}")
+
+# Conexão com o Redis
+try:
+    redis_client = redis.Redis(
+        host=REDIS_HOST,
+        port=int(REDIS_PORT),
+        password=REDIS_PASSWORD,
+        db=int(REDIS_DB),
+        decode_responses=True
+    )
+    # Teste da conexão
+    redis_client.ping()
+    logger.info("Conexão com Redis estabelecida com sucesso")
+except Exception as e:
+    logger.error(f"Erro ao conectar ao Redis: {str(e)}")
+    # Criar um mock do redis em memória para não quebrar a aplicação
+    class MockRedis:
+        def __init__(self):
+            self.data = {}
         
-        <div class="centralizado">
-            <p>Análise dos dígitos de todos os sorteios da Mega Sena</p>
-        </div>
-
-        <div class="actions">
-            <button class="button" id="loadButton">Carregar Resultados</button>
-        </div>
-
-        <div id="loadingMessage" class="loading" style="display: none;">Carregando resultados...</div>
-        <div id="completedMessage" class="completed" style="display: none;">Carregamento concluído!</div>
-
-        <!-- Nova seção de filtros -->
-        <div id="filterContainer" class="filter-container">
-            <!-- Será preenchido via JavaScript -->
-        </div>
-
-        <!-- Estatísticas de Dígitos -->
-        <div class="statistics-container">
-            <h2>Estatísticas de Dígitos</h2>
-            <div id="digitStats" class="digit-stats">
-                <div class="digit-frequency">
-                    <h3>Frequência de Dígitos</h3>
-                    <div id="digitFrequency"></div>
-                </div>
-                <div class="digit-charts">
-                    <h3>Gráfico de Frequência</h3>
-                    <div id="digitChart"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Nova seção de análise de combinações -->
-        <div id="combinationAnalysis" class="combination-analysis">
-            <!-- Será preenchido via JavaScript -->
-        </div>
-
-        <!-- Tabela de Resultados -->
-        <h2>Resultados Detalhados</h2>
-        <table id="megaSenaResults">
-            <thead>
-                <tr>
-                    <th>Concurso</th>
-                    <th>Data</th>
-                    <th>Dezenas</th>
-                    <th>Dígitos</th>
-                    <th>Dígitos Ordenados</th>
-                    <th>Qtd. Dígitos</th>
-                    <th>Copiar</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-
-        <!-- Botões de Download -->
-        <div class="download-buttons">
-            <button class="button" id="downloadCSV">Baixar XLS</button>
-            <button class="button" id="downloadJSON">Baixar HTML</button>
-            <button class="button" id="downloadTXT">Baixar TXT</button>
-        </div>
-    </div>
-
-
-    <!-- <div id="resumo">
-        <h2 style="color: rebeccapurple;">RESUMO GERAL</h2>
-        <p>A análise dos dados mostra que a combinação <strong>0,1,2,3,4,5,6</strong> apareceu <strong>89 vezes</strong> nos concursos da Mega-Sena, com um intervalo médio de <strong>31 concursos</strong> entre suas aparições. A menor sequência entre ocorrências foi de apenas <strong>1 concurso</strong>, e a maior chegou a <strong>107 concursos</strong>.</p>
-
-        <h2 style="color: red;">Estratégia de Aposta Recomendada:</h2>
+        def get(self, key):
+            return self.data.get(key)
         
-        <ul>
-            <li>
-                <strong>Acompanhar o Intervalo Médio</strong>
-                <p>Como a média entre aparições é de <strong>31 concursos</strong>, um bom momento para apostar nessa sequência seria quando ela já estiver sem sair por algo próximo a esse número de concursos.</p>
-            </li>
-            <li>
-                <strong>Monitorar o Último Intervalo</strong>
-                <p>O último intervalo registrado foi de <strong>4 concursos</strong>, o que indica que pode haver uma tendência de repetição em períodos mais curtos.</p>
-            </li>
-            <li>
-                <strong>Variar os Números Dentro da Combinação</strong>
-                <p>Algumas combinações semelhantes (ex.: trocando o número <strong>6 por 7, 8 ou 9</strong>) também aparecem frequentemente. Fazer apostas variando um ou dois números pode aumentar as chances.</p>
-            </li>
-            <li>
-                <strong>Apostas com Maior Frequência Quando o Intervalo Estiver Próximo da Média</strong>
-                <p>Se o intervalo entre as aparições da sequência atingir <strong>25 a 35 concursos</strong>, pode ser um bom indicativo de que ela tem uma boa chance de sair.</p>
-            </li>
-            <li>
-                <strong>Evitar Apostar Quando a Sequência Saiu Recentemente</strong>
-                <p>Se essa sequência apareceu nos últimos <strong>5 a 10 concursos</strong>, a chance de repetição imediata pode ser menor.</p>
-            </li>
-        </ul>
+        def set(self, key, value, ex=None):
+            self.data[key] = value
+            return True
         
-        <h2>Conclusão:</h2>
-        
-        <p>Se a sequência <strong>0,1,2,3,4,5,6</strong> estiver sem aparecer por <strong>30 concursos ou mais</strong>, pode valer a pena apostar nela ou em variações próximas. Caso tenha saído recentemente, melhor esperar mais alguns concursos antes de apostar nessa combinação novamente.</p>
-        
-        <p>Se quiser mais análises sobre outras combinações ou otimizar ainda mais sua estratégia, posso ajudar!</p>
-        
+        def ping(self):
+            return True
+    
+    redis_client = MockRedis()
+    logger.warning("Usando Redis em memória (mock)")
 
-    </div> -->
+@app.route('/')
+def index():
+    return render_template('index.html')
 
+@app.route('/api/resultados')
+def get_resultados():
+    cache_key = 'diadesorte:resultados'
+    
+    # Verifica se os dados estão em cache
+    try:
+        cached_data = redis_client.get(cache_key)
+        if cached_data:
+            logger.info("Usando dados do cache para resultados")
+            return jsonify(json.loads(cached_data))
+    except Exception as e:
+        logger.error(f"Erro ao acessar cache: {str(e)}")
+    
+    # Se não estiver em cache, busca na API
+    try:
+        logger.info(f"Buscando dados na API: {API_BASE_URL}/diadesorte")
+        response = requests.get(f"{API_BASE_URL}/diadesorte")
+        if response.status_code == 200:
+            data = response.json()
+            logger.info(f"Dados recebidos da API: {len(data)} registros")
+            # Salva no Redis por 1 hora (3600 segundos)
+            try:
+                redis_client.set(cache_key, json.dumps(data), ex=3600)
+            except Exception as e:
+                logger.error(f"Erro ao salvar no cache: {str(e)}")
+            return jsonify(data)
+        else:
+            logger.error(f"Erro ao acessar API: {response.status_code}")
+            return jsonify({"error": f"Erro ao acessar a API: {response.status_code}"}), 500
+    except Exception as e:
+        logger.error(f"Exceção ao buscar dados: {str(e)}")
+        return jsonify({"error": str(e)}), 500
 
-    <footer>Feito por: <i>Márcio Fernando Maia - Todos os direitos reservados - 2025</i></footer>
+@app.route('/api/digitos')
+def get_digitos():
+    cache_key = 'diadesorte:digitos'
+    
+    # Log para debug
+    logger.info("Rota /api/digitos acessada")
+    
+    # Verifica se os dados estão em cache
+    try:
+        cached_data = redis_client.get(cache_key)
+        if cached_data:
+            logger.info("Usando dados do cache para dígitos")
+            return jsonify(json.loads(cached_data))
+    except Exception as e:
+        logger.error(f"Erro ao acessar cache: {str(e)}")
+    
+    # Se não estiver em cache, processa os dados
+    try:
+        logger.info(f"Buscando dados na API: {API_BASE_URL}/diadesorte")
+        response = requests.get(f"{API_BASE_URL}/diadesorte")
+        if response.status_code == 200:
+            data = response.json()
+            logger.info(f"Dados recebidos da API: {len(data)} registros")
+            
+            # Processar os dígitos
+            resultados_processados = []
+            frequencia_digitos = {str(i): 0 for i in range(10)}
+            
+            for concurso in data:
+                dezenas = concurso.get('dezenas', [])
+                
+                # Extrair dígitos únicos das dezenas
+                digitos_unicos_set = set()
+                for dezena in dezenas:
+                    for digito in dezena:
+                        digitos_unicos_set.add(digito)
+                        frequencia_digitos[digito] += 1
+                
+                # Converter para lista e ordenar (ordem decrescente para exibição)
+                digitos_unicos = sorted(list(digitos_unicos_set), reverse=True)
+                
+                # Ordenar dígitos para facilitar cópia (ordem crescente)
+                digitos_ordenados = sorted(list(digitos_unicos_set))
+                
+                resultados_processados.append({
+                    'concurso': concurso.get('concurso'),
+                    'data': concurso.get('data'),
+                    'dezenas': dezenas,
+                    'digitos': digitos_unicos,  # Dígitos sem repetição, em ordem decrescente
+                    'digitos_ordenados': digitos_ordenados,  # Dígitos sem repetição, em ordem crescente
+                    'digitos_para_copia': ','.join(digitos_ordenados),  # Com vírgulas para facilitar cópia
+                    'digitos_para_exibicao': ' '.join(digitos_unicos),  # Com espaços para exibição
+                    'contagem_digitos': len(digitos_unicos_set)  # Quantidade de dígitos únicos
+                })
+            
+            # Ordenar frequência de dígitos
+            frequencia_ordenada = {k: v for k, v in sorted(frequencia_digitos.items(), key=lambda item: item[1], reverse=True)}
+            
+            resultado_final = {
+                'resultados': resultados_processados,
+                'frequencia_digitos': frequencia_ordenada
+            }
+            
+            # Salva no Redis por 1 hora (3600 segundos)
+            try:
+                redis_client.set(cache_key, json.dumps(resultado_final), ex=3600)
+            except Exception as e:
+                logger.error(f"Erro ao salvar no cache: {str(e)}")
+                
+            logger.info("Processamento de dígitos concluído com sucesso")
+            return jsonify(resultado_final)
+        else:
+            logger.error(f"Erro ao acessar API: {response.status_code}")
+            return jsonify({"error": f"Erro ao acessar a API: {response.status_code}"}), 500
+    except Exception as e:
+        logger.error(f"Exceção ao processar dados: {str(e)}")
+        return jsonify({"error": str(e)}), 500
 
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/highlight-max.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/frequency-analysis.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/popup-explicacao.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/resumo-simples.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/tabelas-responsivas.js') }}"></script>
-</body>
-</html>
+#__init__.py
+import os
+from flask import Flask
+from flask_cors import CORS
+from dotenv import load_dotenv
 
-#REDIS_HOST=redis-13833.c336.samerica-east1-1.gce.redns.redis-cloud.com
-#REDIS_PORT=13833
-#REDIS_PASSWORD=B058xThhTvAbptQa0s25EAGk7A5u473O
-#REDIS_DB=0
-#FLASK_ENV=development
-#REDIS_URL=redis://default:B058xThhTvAbptQa0s25EAGk7A5u473O@redis-13833.c336.samerica-east1-1.gce.redns.redis-cloud.com:13833
-API_BASE_URL=https://loteriascaixa-api.herokuapp.com/api
+load_dotenv()  # Carregar variÃ¡veis de ambiente do arquivo .env
 
+app = Flask(__name__, 
+            static_folder='../static',
+            template_folder='../templates')
+CORS(app)
 
-REDIS_URL=redis://default:B058xThhTvAbptQa0s25EAGk7A5u473O@redis-13833.c336.samerica-east1-1.gce.redns.redis-cloud.com:13833
+from app import routes
