@@ -82,67 +82,6 @@
             background-color: rgba(153, 27, 27, 0.7);
             color: rgb(254, 202, 202);
         }
-        
-        /* Estilos para o modal popup */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            overflow-y: auto;
-        }
-        
-        .modal-content {
-            background-color: white;
-            margin: 2rem auto;
-            max-width: 90%;
-            width: 800px;
-            border-radius: 8px;
-            position: relative;
-        }
-        
-        .dark .modal-content {
-            background-color: #1f2937;
-            color: #e5e7eb;
-        }
-        
-        .modal-header {
-            padding: 1rem;
-            border-bottom: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .dark .modal-header {
-            border-bottom: 1px solid #4b5563;
-        }
-        
-        .modal-body {
-            padding: 1.5rem;
-            max-height: 70vh;
-            overflow-y: auto;
-        }
-        
-        .modal-footer {
-            padding: 1rem;
-            border-top: 1px solid #e2e8f0;
-            text-align: right;
-        }
-        
-        .dark .modal-footer {
-            border-top: 1px solid #4b5563;
-        }
-        
-        .close-btn {
-            cursor: pointer;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen">
@@ -160,166 +99,26 @@
         });
     </script>
 
-    <!-- Modal de Instruções -->
-    <div id="instructionsModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="text-2xl font-bold text-primary">Como Usar o Gerador de Palpites - Dia de Sorte</h2>
-                <span class="close-btn" id="closeModal">&times;</span>
-            </div>
-            <div class="modal-body">
-                <div class="space-y-6">
-                    <section>
-                        <h3 class="text-xl font-semibold text-primary mb-2">Introdução</h3>
-                        <p class="mb-2">Este aplicativo utiliza uma abordagem matemática para gerar palpites para a loteria Dia de Sorte, baseando-se em combinações de dígitos que ainda não foram sorteadas.</p>
-                        <p>A estratégia principal é identificar quais combinações de 5 dígitos (de 0 a 9) nunca apareceram nos sorteios anteriores, maximizando suas chances ao jogar exclusivamente com estas combinações inexploradas.</p>
-                    </section>
-                    
-                    <section>
-                        <h3 class="text-xl font-semibold text-primary mb-2">Passo a Passo</h3>
-                        
-                        <div class="mb-4">
-                            <h4 class="font-bold">1. Analisar Resultados Anteriores</h4>
-                            <ul class="list-disc pl-6 mt-1 mb-2">
-                                <li>Expanda a seção "Análise de Frequência de Resultados Anteriores"</li>
-                                <li>Clique em "Buscar Resultados" para importar os sorteios passados automaticamente, ou</li>
-                                <li>Cole manualmente os resultados na caixa de texto (cada linha deve conter os números de um sorteio)</li>
-                                <li>Clique em "Analisar Frequência" para processar os dados</li>
-                            </ul>
-                            <p class="text-sm italic">O sistema identificará quais combinações de 5 dígitos nunca foram sorteadas. Estas serão automaticamente usadas para gerar seus palpites.</p>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <h4 class="font-bold">2. Configurar Parâmetros (opcional)</h4>
-                            <ul class="list-disc pl-6 mt-1 mb-2">
-                                <li>Expanda a seção "Configurações"</li>
-                                <li>Ajuste a quantidade de dezenas por palpite (7 a 15)</li>
-                                <li>Configure a distribuição desejada de números baixos, médios e altos</li>
-                            </ul>
-                            <p class="text-sm italic">Recomendamos manter a configuração padrão para uma distribuição equilibrada.</p>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <h4 class="font-bold">3. Gerar Palpites</h4>
-                            <ul class="list-disc pl-6 mt-1 mb-2">
-                                <li>Clique no botão "Gerar Palpites" na seção de Configurações</li>
-                                <li>Os palpites serão gerados utilizando apenas as combinações que nunca foram sorteadas</li>
-                                <li>Você pode filtrar os resultados por categoria (baixas, médias, altas) usando as abas</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <h4 class="font-bold">4. Explorar Combinações Específicas (opcional)</h4>
-                            <ul class="list-disc pl-6 mt-1 mb-2">
-                                <li>Expanda a seção "Gerador por Combinação Específica"</li>
-                                <li>Selecione uma combinação de dígitos específica (as não sorteadas terão um ★)</li>
-                                <li>Clique em "Gerar Palpites" para ver todas as combinações possíveis para aquele conjunto de dígitos</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <h4 class="font-bold">5. Exportar seus Palpites</h4>
-                            <ul class="list-disc pl-6 mt-1 mb-2">
-                                <li>Use o botão "Somente Dezenas" para baixar apenas os números</li>
-                                <li>Use o botão "Baixar Detalhado" para um relatório completo com estatísticas</li>
-                                <li>Para imprimir, use o botão "Imprimir" na seção de Configurações</li>
-                            </ul>
-                        </div>
-                    </section>
-                    
-                    <section>
-                        <h3 class="text-xl font-semibold text-primary mb-2">Seções da Aplicação</h3>
-                        
-                        <div class="mb-3">
-                            <h4 class="font-bold">Combinações de Dígitos</h4>
-                            <p>Mostra as combinações de 5 dígitos que serão usadas para gerar os palpites. Após a análise, mostrará apenas as combinações que nunca foram sorteadas.</p>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <h4 class="font-bold">Análise de Frequência</h4>
-                            <p>Permite inserir e analisar resultados anteriores, identificando quais combinações de dígitos já apareceram e quais ainda não foram sorteadas.</p>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <h4 class="font-bold">Tabela de Combinações</h4>
-                            <p>Mostra em detalhes todas as combinações disponíveis e quais números cada uma pode gerar.</p>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <h4 class="font-bold">Resumo Estatístico</h4>
-                            <p>Fornece estatísticas sobre as combinações e quantos números cada uma gera.</p>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <h4 class="font-bold">Gerador por Combinação Específica</h4>
-                            <p>Permite gerar todos os palpites possíveis para uma combinação específica de dígitos.</p>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <h4 class="font-bold">Palpites Gerados</h4>
-                            <p>Exibe todos os palpites gerados a partir das combinações selecionadas.</p>
-                        </div>
-                    </section>
-                    
-                    <section class="bg-blue-50 dark:bg-blue-900 p-4 rounded-lg">
-                        <h3 class="text-xl font-semibold text-blue-700 dark:text-blue-300 mb-2">Resumo</h3>
-                        <ol class="list-decimal pl-6 space-y-2 text-blue-800 dark:text-blue-200">
-                            <li>Busque ou insira resultados anteriores da Dia de Sorte</li>
-                            <li>Clique em "Analisar Frequência" para identificar combinações não sorteadas</li>
-                            <li>Ajuste as configurações conforme desejado (quantidade de dezenas, distribuição)</li>
-                            <li>Clique em "Gerar Palpites" para criar jogos baseados apenas nas combinações nunca sorteadas</li>
-                            <li>Exporte seus palpites usando os botões de download ou impressão</li>
-                        </ol>
-                        <p class="mt-4 font-bold text-blue-700 dark:text-blue-300">Jogando apenas com combinações que nunca apareceram, você estará apostando em padrões matemáticos ainda não explorados nos sorteios!</p>
-                    </section>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button id="closeModalBtn" class="bg-primary hover:bg-primary/90 text-white py-2 px-6 rounded">Entendi</button>
-            </div>
-        </div>
-    </div>
-
     <div class="container mx-auto px-4 py-8">
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="text-3xl font-bold text-center text-primary">Gerador de Palpites - Dia de Sorte</h1>
-            <button id="showInstructionsBtn" class="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 py-2 px-4 rounded flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
-                </svg>
-                Como Usar
-            </button>
-        </div>
+        <h1 class="text-3xl font-bold text-center text-primary mb-6">Gerador de Palpites - Dia de Sorte</h1>
         
-        <!-- Seção: Combinações de Dígitos -->
-        <div class="mb-6">
-            <div class="flex items-center justify-between cursor-pointer mb-2" id="digitCombinationsHeader">
-                <h2 class="text-xl font-semibold">Combinações de Dígitos <span class="small">(126 combinações de dígitos)</span></h2>
-                <svg class="h-6 w-6 text-gray-500 dark:text-gray-400 toggle-btn" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-            </div>
-            <div id="digitCombinationsContainer" class="transition-height bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded p-4" style="max-height: 0px; overflow: hidden;">
+        <div class="flex flex-col md:flex-row gap-4 mb-6">
+            <div class="w-full md:w-1/2">
+                <h2 class="text-xl font-semibold mb-2">Combinações de Dígitos <span class="small">(126 combinações de dígitos)</span></h2>
                 <textarea id="digitCombinations" rows="6" class="w-full p-2 border rounded dark:bg-gray-800 dark:border-gray-700 text-base" readonly></textarea>
             </div>
-        </div>
-        
-        <!-- Seção: Configurações -->
-        <div class="mb-6">
-            <div class="flex items-center justify-between cursor-pointer mb-2" id="configHeader">
-                <h2 class="text-xl font-semibold">Configurações</h2>
-                <svg class="h-6 w-6 text-gray-500 dark:text-gray-400 toggle-btn" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-            </div>
-            <div id="configContainer" class="transition-height bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded" style="max-height: 500px; overflow: hidden;">
+            
+            <div class="w-full md:w-1/2">
+                <h2 class="text-xl font-semibold mb-2">Configurações</h2>
                 <div class="space-y-4 bg-gray-100 dark:bg-gray-800 p-4 rounded">
                     <div>
                         <label class="block mb-1">Quantidade de dezenas por palpite:</label>
                         <input type="number" id="numberPerBet" value="8" min="7" max="15" class="p-2 border rounded w-full dark:bg-gray-700 dark:border-gray-600 text-base">
                     </div>
-                    <!-- Campo de número máximo removido, agora é fixo em 31 e oculto -->
-                    <input type="hidden" id="maxNumber" value="31">
+                    <div>
+                        <label class="block mb-1">Número máximo permitido:</label>
+                        <input type="number" id="maxNumber" value="31" min="1" max="31" class="p-2 border rounded w-full dark:bg-gray-700 dark:border-gray-600 text-base">
+                    </div>
                     <div>
                         <label class="block mb-1">Distribuição por faixa:</label>
                         <div class="flex flex-wrap gap-2">
@@ -349,92 +148,83 @@
             </div>
         </div>
         
-        <!-- Seção: Análise de Frequência -->
         <div class="mb-6">
-            <div class="flex items-center justify-between cursor-pointer mb-2" id="frequencyHeader">
-                <h2 class="text-xl font-semibold">Análise de Frequência de Resultados Anteriores</h2>
-                <svg class="h-6 w-6 text-gray-500 dark:text-gray-400 toggle-btn" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-            </div>
-            <div id="frequencyContainer" class="transition-height bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded" style="max-height: 500px; overflow: hidden;">
-                <div class="p-4">
-                    <div class="mb-4">
-                        <label class="block mb-1">Cole os resultados do Dia de Sorte (um por linha, números separados por espaço):</label>
-                        <textarea id="historicalResults" rows="6" placeholder="Ex: 01 03 07 13 18 27 29 
+            <h2 class="text-xl font-semibold mb-2">Análise de Frequência de Resultados Anteriores</h2>
+            <div class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded p-4">
+                <div class="mb-4">
+                    <label class="block mb-1">Cole os resultados do Dia de Sorte (um por linha, números separados por espaço):</label>
+                    <textarea id="historicalResults" rows="6" placeholder="Ex: 01 03 07 13 18 27 29 
 04 07 09 10 14 20 25" class="w-full p-2 border rounded dark:bg-gray-800 dark:border-gray-700 text-base"></textarea>
+                </div>
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <button id="analyzeBtn" class="bg-primary hover:bg-primary/90 text-white font-bold py-2 px-4 rounded">
+                        Analisar Frequência
+                    </button>
+                    <div class="flex flex-col sm:flex-row gap-2 flex-grow">
+                        <select id="apiSelect" class="p-2 border rounded dark:bg-gray-700 dark:border-gray-600 text-base flex-grow">
+                            <option value="auto">Auto (Testar Todas as APIs)</option>
+                            <option value="caixa">API Caixa Oficial</option>
+                            <option value="heroku">API Heroku</option>
+                            <option value="brasilapi">API Brasil</option>
+                        </select>
+                        <select id="modeSelect" class="p-2 border rounded dark:bg-gray-700 dark:border-gray-600 text-base">
+                            <option value="direct">Acesso Direto</option>
+                            <option value="proxy">Via Proxy CORS</option>
+                            <option value="both">Tentar Ambos</option>
+                        </select>
                     </div>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <button id="analyzeBtn" class="bg-primary hover:bg-primary/90 text-white font-bold py-2 px-4 rounded">
-                            Analisar Frequência
-                        </button>
-                        <div class="flex flex-col sm:flex-row gap-2 flex-grow">
-                            <select id="apiSelect" class="p-2 border rounded dark:bg-gray-700 dark:border-gray-600 text-base flex-grow">
-                                <option value="auto">Auto (Testar Todas as APIs)</option>
-                                <option value="caixa">API Caixa Oficial</option>
-                                <option value="heroku">API Heroku</option>
-                                <option value="brasilapi">API Brasil</option>
-                            </select>
-                            <select id="modeSelect" class="p-2 border rounded dark:bg-gray-700 dark:border-gray-600 text-base">
-                                <option value="direct">Acesso Direto</option>
-                                <option value="proxy">Via Proxy CORS</option>
-                                <option value="both">Tentar Ambos</option>
-                            </select>
+                    <input type="number" id="concursoNum" placeholder="Nº do concurso (opcional)" min="1" class="p-2 border rounded dark:bg-gray-700 dark:border-gray-600 text-base w-48">
+                    <button id="fetchResultsBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center">
+                        <span id="fetchText">Buscar Resultados</span>
+                        <svg id="loadingSpinner" class="animate-spin ml-2 h-4 w-4 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div id="apiStatus" class="mb-4 p-3 bg-gray-100 dark:bg-gray-700 rounded hidden">
+                    <div class="font-semibold mb-1">Status da busca:</div>
+                    <div id="apiStatusContent" class="text-sm"></div>
+                </div>
+                <div id="frequencyAnalysis" class="mt-4">
+                    <div id="frequencyResults" class="hidden">
+                        <h3 class="text-lg font-semibold mb-2">Frequência de Dígitos</h3>
+                        <div id="topCombinations" class="bg-gray-100 dark:bg-gray-700 p-3 rounded mb-3">
+                            <!-- Será preenchido com as combinações mais frequentes -->
                         </div>
-                        <input type="number" id="concursoNum" placeholder="Nº do concurso (opcional)" min="1" class="p-2 border rounded dark:bg-gray-700 dark:border-gray-600 text-base w-48">
-                        <button id="fetchResultsBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center">
-                            <span id="fetchText">Buscar Resultados</span>
-                            <svg id="loadingSpinner" class="animate-spin ml-2 h-4 w-4 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-                        </button>
-                    </div>
-                    <div id="apiStatus" class="mb-4 p-3 bg-gray-100 dark:bg-gray-700 rounded hidden">
-                        <div class="font-semibold mb-1">Status da busca:</div>
-                        <div id="apiStatusContent" class="text-sm"></div>
-                    </div>
-                    <div id="frequencyAnalysis" class="mt-4">
-                        <div id="frequencyResults" class="hidden">
-                            <h3 class="text-lg font-semibold mb-2">Frequência de Dígitos</h3>
-                            <div id="topCombinations" class="bg-gray-100 dark:bg-gray-700 p-3 rounded mb-3">
-                                <!-- Será preenchido com as combinações mais frequentes -->
+                        
+                        <!-- Novo painel para combinações não sorteadas -->
+                        <div id="undrawnCombinations" class="bg-blue-100 dark:bg-blue-900 p-3 rounded mb-3">
+                            <div class="font-bold text-xl mb-3 text-blue-800 dark:text-blue-200">Combinações Ainda Não Sorteadas</div>
+                            <div id="undrawnCombinationsContent" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                                <!-- Será preenchido com as combinações não sorteadas -->
                             </div>
-                            
-                            <!-- Novo painel para combinações não sorteadas -->
-                            <div id="undrawnCombinations" class="bg-blue-100 dark:bg-blue-900 p-3 rounded mb-3">
-                                <div class="font-bold text-xl mb-3 text-blue-800 dark:text-blue-200">Combinações Ainda Não Sorteadas</div>
-                                <div id="undrawnCombinationsContent" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-                                    <!-- Será preenchido com as combinações não sorteadas -->
-                                </div>
-                                <div class="mt-3 flex justify-end">
-                                    <button id="downloadUndrawnBtn" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-1 px-3 rounded">
-                                        Baixar Lista
-                                    </button>
-                                </div>
+                            <div class="mt-3 flex justify-end">
+                                <button id="downloadUndrawnBtn" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-1 px-3 rounded">
+                                    Baixar Lista
+                                </button>
                             </div>
-                            
-                            <div class="overflow-x-auto">
-                                <table class="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
-                                    <thead>
-                                        <tr class="bg-gray-100 dark:bg-gray-700">
-                                            <th class="px-2 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Combinação de Dígitos</th>
-                                            <th class="px-2 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Frequência</th>
-                                            <th class="px-2 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Porcentagem</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="frequencyTableBody" class="divide-y divide-gray-200 dark:divide-gray-700">
-                                        <!-- Será preenchido dinamicamente -->
-                                    </tbody>
-                                </table>
-                            </div>
+                        </div>
+                        
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
+                                <thead>
+                                    <tr class="bg-gray-100 dark:bg-gray-700">
+                                        <th class="px-2 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Combinação de Dígitos</th>
+                                        <th class="px-2 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Frequência</th>
+                                        <th class="px-2 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Porcentagem</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="frequencyTableBody" class="divide-y divide-gray-200 dark:divide-gray-700">
+                                    <!-- Será preenchido dinamicamente -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Seção: Tabela de Combinações -->
         <div class="mb-8">
             <div class="flex items-center justify-between cursor-pointer mb-2" id="combinationsToggleHeader">
                 <h2 class="text-xl font-semibold">Tabela de Combinações</h2>
@@ -460,194 +250,129 @@
             </div>
         </div>
 
-        <!-- Seção: Resumo Estatístico -->
         <div class="mb-8">
-            <div class="flex items-center justify-between cursor-pointer mb-2" id="statsHeader">
-                <h2 class="text-xl font-semibold">Resumo Estatístico</h2>
-                <svg class="h-6 w-6 text-gray-500 dark:text-gray-400 toggle-btn" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
+            <h2 class="text-xl font-semibold mb-2">Resumo Estatístico</h2>
+            <div id="statisticsSummary" class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded p-4">
+                <div id="statisticsContent" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Dynamic content will be inserted here -->
+                </div>
+                <div id="statisticsTotal" class="mt-4 font-bold border-t pt-2 dark:border-gray-700">
+                    <!-- Total will be inserted here -->
+                </div>
             </div>
-            <div id="statsContainer" class="transition-height bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded" style="max-height: 0px; overflow: hidden;">
-                <div id="statisticsSummary" class="p-4">
-                    <div id="statisticsContent" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <!-- Dynamic content will be inserted here -->
+        </div>
+
+        <!-- Nova seção para geração de todos os palpites para uma combinação específica -->
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold mb-4">Gerador por Combinação Específica</h2>
+            <div class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded p-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block mb-2">Selecione uma combinação de dígitos:</label>
+                        <select id="specificCombination" class="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600 text-base">
+                            <!-- Será preenchido dinamicamente -->
+                        </select>
                     </div>
-                    <div id="statisticsTotal" class="mt-4 font-bold border-t pt-2 dark:border-gray-700">
-                        <!-- Total will be inserted here -->
+                    <div>
+                        <label class="block mb-2">Dezenas por palpite:</label>
+                        <div class="flex gap-4">
+                            <input type="number" id="specificNumberPerBet" value="7" min="5" max="15" class="p-2 border rounded w-full dark:bg-gray-700 dark:border-gray-600 text-base">
+                            <button id="generateSpecificBtn" class="bg-primary hover:bg-primary/90 text-white font-bold py-2 px-4 rounded whitespace-nowrap">
+                                Gerar Palpites
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded">
+                        <div class="font-semibold mb-2">Dezenas possíveis para esta combinação:</div>
+                        <div id="possibleNumbersDisplay" class="flex flex-wrap gap-2"></div>
+                    </div>
+                </div>
+
+                <div class="mb-4 flex flex-wrap gap-2 justify-between items-center">
+                    <div>
+                        <span class="font-semibold">Total de palpites gerados: </span>
+                        <span id="specificBetCount" class="bg-primary/10 dark:bg-primary/20 text-primary px-2 py-1 rounded-full font-bold">0</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <button id="downloadSpecificBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center disabled:opacity-50 disabled:cursor-not-allowed">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                            Baixar Palpites
+                        </button>
+                    </div>
+                </div>
+
+                <div id="specificBetsResults" class="border-t dark:border-gray-700 pt-4">
+                    <div id="specificResultsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Resultados dinâmicos serão mostrados aqui -->
+                    </div>
+                    
+                    <!-- Paginação -->
+                    <div id="paginationContainer" class="mt-6 flex justify-center items-center space-x-2">
+                        <button id="prevPageBtn" class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed">
+                            Anterior
+                        </button>
+                        <span id="paginationInfo" class="text-sm px-2">Página 1 de 1</span>
+                        <button id="nextPageBtn" class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed">
+                            Próxima
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Seção: Gerador por Combinação Específica -->
-        <div class="mb-8">
-            <div class="flex items-center justify-between cursor-pointer mb-2" id="specificHeader">
-                <h2 class="text-xl font-semibold">Gerador por Combinação Específica</h2>
-                <svg class="h-6 w-6 text-gray-500 dark:text-gray-400 toggle-btn" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-            </div>
-            <div id="specificContainer" class="transition-height bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded" style="max-height: 0px; overflow: hidden;">
-                <div class="p-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div>
-                            <label class="block mb-2">Selecione uma combinação de dígitos:</label>
-                            <select id="specificCombination" class="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600 text-base">
-                                <!-- Será preenchido dinamicamente -->
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block mb-2">Dezenas por palpite:</label>
-                            <div class="flex gap-4">
-                                <input type="number" id="specificNumberPerBet" value="7" min="5" max="15" class="p-2 border rounded w-full dark:bg-gray-700 dark:border-gray-600 text-base">
-                                <button id="generateSpecificBtn" class="bg-primary hover:bg-primary/90 text-white font-bold py-2 px-4 rounded whitespace-nowrap">
-                                    Gerar Palpites
-                                </button>
-                            </div>
-                        </div>
+        <div id="results" class="mt-6">
+            <h2 class="text-xl font-semibold mb-4">Palpites Gerados (<span id="totalBetsCount">0</span> palpites)</h2>
+            
+            <div class="mb-4 flex flex-wrap gap-2 justify-between items-center">
+                <div class="flex flex-wrap gap-2">
+                    <div class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-3 py-1 rounded-full text-sm font-medium">
+                        Baixas (1-10): <span id="lowCount">0</span>
                     </div>
-
-                    <div class="mb-4">
-                        <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded">
-                            <div class="font-semibold mb-2">Dezenas possíveis para esta combinação:</div>
-                            <div id="possibleNumbersDisplay" class="flex flex-wrap gap-2"></div>
-                        </div>
+                    <div class="bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 px-3 py-1 rounded-full text-sm font-medium">
+                        Médias (11-20): <span id="mediumCount">0</span>
                     </div>
-
-                    <div class="mb-4 flex flex-wrap gap-2 justify-between items-center">
-                        <div>
-                            <span class="font-semibold">Total de palpites gerados: </span>
-                            <span id="specificBetCount" class="bg-primary/10 dark:bg-primary/20 text-primary px-2 py-1 rounded-full font-bold">0</span>
-                        </div>
-                        <div class="flex gap-2">
-                            <button id="downloadSpecificBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center disabled:opacity-50 disabled:cursor-not-allowed">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                                Baixar Palpites
-                            </button>
-                        </div>
-                    </div>
-
-                    <div id="specificBetsResults" class="border-t dark:border-gray-700 pt-4">
-                        <div id="specificResultsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            <!-- Resultados dinâmicos serão mostrados aqui -->
-                        </div>
-                        
-                        <!-- Paginação -->
-                        <div id="paginationContainer" class="mt-6 flex justify-center items-center space-x-2">
-                            <button id="prevPageBtn" class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed">
-                                Anterior
-                            </button>
-                            <span id="paginationInfo" class="text-sm px-2">Página 1 de 1</span>
-                            <button id="nextPageBtn" class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed">
-                                Próxima
-                            </button>
-                        </div>
+                    <div class="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 px-3 py-1 rounded-full text-sm font-medium">
+                        Altas (21-31): <span id="highCount">0</span>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Seção: Palpites Gerados -->
-        <div class="mb-8">
-            <div class="flex items-center justify-between cursor-pointer mb-2" id="resultsHeader">
-                <h2 class="text-xl font-semibold">Palpites Gerados (<span id="totalBetsCount">0</span> palpites)</h2>
-                <svg class="h-6 w-6 text-gray-500 dark:text-gray-400 toggle-btn" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-            </div>
-            <div id="resultsContainer" class="transition-height bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded" style="max-height: 500px; overflow: hidden;">
-                <div class="p-4">
-                    <div class="mb-4 flex flex-wrap gap-2 justify-between items-center">
-                        <div class="flex flex-wrap gap-2">
-                            <div class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-3 py-1 rounded-full text-sm font-medium">
-                                Baixas (1-10): <span id="lowCount">0</span>
-                            </div>
-                            <div class="bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 px-3 py-1 rounded-full text-sm font-medium">
-                                Médias (11-20): <span id="mediumCount">0</span>
-                            </div>
-                            <div class="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 px-3 py-1 rounded-full text-sm font-medium">
-                                Altas (21-31): <span id="highCount">0</span>
-                            </div>
-                        </div>
-                        <div class="flex gap-2">
-                            <button id="downloadSimpleBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                                Somente Dezenas
-                            </button>
-                            <button id="downloadBtn" class="bg-primary hover:bg-primary/90 text-white font-bold py-2 px-4 rounded flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                                Baixar Detalhado
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="mb-4">
-                        <div class="flex border-b dark:border-gray-700">
-                            <button id="allBetsTab" class="py-2 px-4 font-medium border-b-2 border-primary text-primary">Todos</button>
-                            <button id="lowBetsTab" class="py-2 px-4 font-medium text-gray-600 dark:text-gray-400">Baixas</button>
-                            <button id="mediumBetsTab" class="py-2 px-4 font-medium text-gray-600 dark:text-gray-400">Médias</button>
-                            <button id="highBetsTab" class="py-2 px-4 font-medium text-gray-600 dark:text-gray-400">Altas</button>
-                        </div>
-                    </div>
-                    
-                    <div id="bettingResults" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <!-- Dynamic content will be inserted here -->
-                    </div>
+                <div class="flex gap-2">
+                    <button id="downloadSimpleBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                        Somente Dezenas
+                    </button>
+                    <button id="downloadBtn" class="bg-primary hover:bg-primary/90 text-white font-bold py-2 px-4 rounded flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                        Baixar Detalhado
+                    </button>
                 </div>
+            </div>
+            
+            <div class="mb-4">
+                <div class="flex border-b dark:border-gray-700">
+                    <button id="allBetsTab" class="py-2 px-4 font-medium border-b-2 border-primary text-primary">Todos</button>
+                    <button id="lowBetsTab" class="py-2 px-4 font-medium text-gray-600 dark:text-gray-400">Baixas</button>
+                    <button id="mediumBetsTab" class="py-2 px-4 font-medium text-gray-600 dark:text-gray-400">Médias</button>
+                    <button id="highBetsTab" class="py-2 px-4 font-medium text-gray-600 dark:text-gray-400">Altas</button>
+                </div>
+            </div>
+            
+            <div id="bettingResults" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Dynamic content will be inserted here -->
             </div>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Modal functions
-            const modal = document.getElementById('instructionsModal');
-            const showModalBtn = document.getElementById('showInstructionsBtn');
-            const closeModalBtn = document.getElementById('closeModalBtn');
-            const closeModalX = document.getElementById('closeModal');
-            
-            // Show modal
-            showModalBtn.addEventListener('click', function() {
-                modal.style.display = 'block';
-                document.body.style.overflow = 'hidden'; // Prevent scrolling behind modal
-            });
-            
-            // Close modal with button
-            closeModalBtn.addEventListener('click', function() {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto'; // Re-enable scrolling
-            });
-            
-            // Close modal with X
-            closeModalX.addEventListener('click', function() {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto'; // Re-enable scrolling
-            });
-            
-            // Close modal when clicking outside
-            window.addEventListener('click', function(event) {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                    document.body.style.overflow = 'auto'; // Re-enable scrolling
-                }
-            });
-            
-            // Show modal immediately on first visit
-            if (!localStorage.getItem('instructionsShown')) {
-                setTimeout(() => {
-                    modal.style.display = 'block';
-                    document.body.style.overflow = 'hidden';
-                    localStorage.setItem('instructionsShown', 'true');
-                }, 500);
-            }
-            
             // Configurações das APIs
             const API_CONFIG = {
                 // APIs oficiais
@@ -662,50 +387,6 @@
                     'https://cors-anywhere.herokuapp.com/'
                 ]
             };
-            
-            // Configuração para todas as seções expansíveis
-            function setupCollapsibleSection(headerId, containerId, initiallyExpanded = false) {
-                const header = document.getElementById(headerId);
-                const container = document.getElementById(containerId);
-                const toggleBtn = header.querySelector('.toggle-btn');
-                
-                // Estado inicial
-                if (!initiallyExpanded) {
-                    container.style.maxHeight = '0px';
-                } else {
-                    container.style.maxHeight = container.scrollHeight + 'px';
-                    toggleBtn.classList.add('active');
-                }
-                
-                header.addEventListener('click', function() {
-                    toggleBtn.classList.toggle('active');
-                    
-                    if (container.style.maxHeight === '0px' || container.style.maxHeight === '') {
-                        container.style.maxHeight = container.scrollHeight + 'px';
-                    } else {
-                        container.style.maxHeight = '0px';
-                    }
-                });
-                
-                // Método para atualizar a altura quando o conteúdo muda
-                return {
-                    updateHeight: function() {
-                        if (container.style.maxHeight !== '0px') {
-                            container.style.maxHeight = container.scrollHeight + 'px';
-                        }
-                    }
-                };
-            }
-            
-            // Configurar todas as seções expansíveis
-            // Alguns são inicialmente expandidos (true), outros não (false)
-            const digitCombinationsSection = setupCollapsibleSection('digitCombinationsHeader', 'digitCombinationsContainer', false);
-            const configSection = setupCollapsibleSection('configHeader', 'configContainer', true);
-            const frequencySection = setupCollapsibleSection('frequencyHeader', 'frequencyContainer', true);
-            const combinationsSection = setupCollapsibleSection('combinationsToggleHeader', 'combinationsTableContainer', false);
-            const statsSection = setupCollapsibleSection('statsHeader', 'statsContainer', false);
-            const specificSection = setupCollapsibleSection('specificHeader', 'specificContainer', false);
-            const resultsSection = setupCollapsibleSection('resultsHeader', 'resultsContainer', true);
             
             // Armazenamento de cache local para dados das APIs
             const LOCAL_CACHE = {
@@ -806,7 +487,7 @@
 
             // Gerar todas as combinações possíveis e filtrar as válidas
             const allPossibleCombinations = generateAllDigitCombinations();
-            let validDigitCombinations = filterValidCombinations(allPossibleCombinations);
+            const validDigitCombinations = filterValidCombinations(allPossibleCombinations);
             
             // Fill the textarea with the valid combinations
             document.getElementById('digitCombinations').value = validDigitCombinations.join('\n');
@@ -826,6 +507,21 @@
             
             // Variáveis para armazenar combinações não sorteadas
             let undrawnCombinations = [];
+
+            // Configurar o toggle para a tabela de combinações
+            const toggleHeader = document.getElementById('combinationsToggleHeader');
+            const tableContainer = document.getElementById('combinationsTableContainer');
+            const toggleBtn = toggleHeader.querySelector('.toggle-btn');
+            
+            toggleHeader.addEventListener('click', function() {
+                toggleBtn.classList.toggle('active');
+                
+                if (tableContainer.style.maxHeight === '0px' || tableContainer.style.maxHeight === '') {
+                    tableContainer.style.maxHeight = tableContainer.scrollHeight + 'px';
+                } else {
+                    tableContainer.style.maxHeight = '0px';
+                }
+            });
 
             // Preencher o dropdown de combinações específicas
             const specificComboSelect = document.getElementById('specificCombination');
@@ -954,8 +650,7 @@
 
             // Function to generate and display the results
             function generateResults() {
-                // Nota: maxNumber é fixo em 31 agora
-                const maxNumber = 31; // parseInt(document.getElementById('maxNumber').value);
+                const maxNumber = parseInt(document.getElementById('maxNumber').value);
                 const numbersPerBet = parseInt(document.getElementById('numberPerBet').value);
                 const lowRange = parseInt(document.getElementById('lowRange').value);
                 const mediumRange = parseInt(document.getElementById('mediumRange').value);
@@ -1122,20 +817,19 @@
                 // Add total
                 statisticsTotal.innerHTML = `Total: ${totalCombinations} conjuntos de dígitos analisados`;
                 
-                // Atualizar alturas das seções expansíveis após preencher o conteúdo
-                combinationsSection.updateHeight();
-                statsSection.updateHeight();
-                resultsSection.updateHeight();
-                
-                // Expandir automaticamente a seção de resultados após gerar
-                if (document.getElementById('resultsContainer').style.maxHeight === '0px') {
-                    document.getElementById('resultsHeader').click();
-                }
+                // Ajusta a altura da tabela de combinações para quando o usuário quiser expandir
+                setTimeout(() => {
+                    tableContainer.style.maxHeight = tableContainer.scrollHeight + 'px';
+                    // Volta a ocultar a tabela
+                    setTimeout(() => {
+                        tableContainer.style.maxHeight = '0px';
+                    }, 100);
+                }, 100);
             }
 
             // Função para gerar texto para download
             function generateDownloadText() {
-                const maxNumber = 31; // Fixed at 31
+                const maxNumber = parseInt(document.getElementById('maxNumber').value);
                 const numbersPerBet = parseInt(document.getElementById('numberPerBet').value);
                 const lowRange = parseInt(document.getElementById('lowRange').value);
                 const mediumRange = parseInt(document.getElementById('mediumRange').value);
@@ -1292,9 +986,6 @@
                 
                 // Mostrar resultados da página atual
                 showSpecificBetsPage();
-                
-                // Atualizar altura da seção expansível
-                specificSection.updateHeight();
             }
 
             // Função para mostrar a página atual de palpites específicos
@@ -1372,7 +1063,7 @@
             // Função para mostrar os números possíveis para a combinação selecionada
             function updatePossibleNumbers() {
                 const selectedCombo = document.getElementById('specificCombination').value;
-                const maxNumber = 31; // Fixo em 31
+                const maxNumber = parseInt(document.getElementById('maxNumber').value);
                 const digits = selectedCombo.split(',');
                 
                 specificPossibleNumbers = generateTwoDigitNumbers(digits, maxNumber);
@@ -1395,9 +1086,6 @@
                 document.getElementById('specificBetCount').textContent = '0';
                 document.getElementById('specificResultsContainer').innerHTML = '';
                 document.getElementById('downloadSpecificBtn').disabled = true;
-                
-                // Atualizar altura da seção expansível
-                specificSection.updateHeight();
                 
                 setupPagination();
             }
@@ -1425,11 +1113,6 @@
                 // Configurar paginação e mostrar resultados
                 currentPage = 1;
                 setupPagination();
-                
-                // Expandir a seção se estiver fechada
-                if (document.getElementById('specificContainer').style.maxHeight === '0px') {
-                    document.getElementById('specificHeader').click();
-                }
             }
 
             // Função para gerar texto de download dos palpites específicos
@@ -1712,30 +1395,6 @@
                     });
                     
                     document.getElementById('undrawnCombinations').style.display = 'block';
-                    
-                    // NOVA FUNCIONALIDADE: Preencher a área "Combinações de Dígitos" com apenas as não sorteadas
-                    document.getElementById('digitCombinations').value = undrawnCombinations.join('\n');
-                    
-                    // Atualizar a variável global para usar apenas as combinações não sorteadas
-                    validDigitCombinations = [...undrawnCombinations];
-                    
-                    // Atualizar o texto do cabeçalho
-                    const combinationsHeader = document.querySelector('#digitCombinationsHeader h2');
-                    if (combinationsHeader) {
-                        combinationsHeader.innerHTML = `Combinações de Dígitos <span class="small">(${undrawnCombinations.length} combinações não sorteadas)</span>`;
-                    }
-                    
-                    // Limpar quaisquer palpites gerados anteriormente
-                    document.getElementById('bettingResults').innerHTML = '';
-                    document.getElementById('totalBetsCount').textContent = '0';
-                    document.getElementById('lowCount').textContent = '0';
-                    document.getElementById('mediumCount').textContent = '0';
-                    document.getElementById('highCount').textContent = '0';
-                    
-                    // Expandir a seção de combinações de dígitos
-                    if (document.getElementById('digitCombinationsContainer').style.maxHeight === '0px') {
-                        document.getElementById('digitCombinationsHeader').click();
-                    }
                 } else {
                     document.getElementById('undrawnCombinations').style.display = 'none';
                 }
@@ -1756,9 +1415,6 @@
                     
                     frequencyTableBody.appendChild(row);
                 });
-                
-                // Atualizar altura da seção de frequência após preenchimento
-                frequencySection.updateHeight();
                 
                 // Atualizar o dropdown para priorizar combinações não sorteadas
                 if (undrawnCombinations.length > 0) {
@@ -2196,7 +1852,6 @@
                 } finally {
                     spinner.classList.add('hidden');
                     fetchText.textContent = 'Buscar Resultados';
-                    frequencySection.updateHeight();
                 }
             }
             
