@@ -983,68 +983,6 @@
                     return fetchWithProxy(url, attempts + 1);
                 }
             }
-
-            // ===== Função para gerar concursos complementares =====
-            // Esta função complementa os dados obtidos das APIs com concursos adicionais
-            function completarConcursosFaltantes(resultados) {
-                if (!resultados || resultados.length === 0) return [];
-                
-                // Ordenar os resultados pelo número do concurso (crescente)
-                resultados.sort((a, b) => parseInt(a.concurso) - parseInt(b.concurso));
-                
-                // Obter o último concurso das APIs
-                const ultimoConcursoAPI = parseInt(resultados[resultados.length - 1].concurso);
-                
-                // Verificar se precisamos adicionar o concurso 1039 e possivelmente outros
-                const concursosFaltantes = [];
-                
-                // Adicionar o concurso 1039 especificamente, que o usuário mencionou
-                if (ultimoConcursoAPI < 1039) {
-                    concursosFaltantes.push({
-                        concurso: "1039",
-                        data: "15/03/2025",
-                        dezenas: ["01", "05", "07", "10", "19", "21", "22"]
-                    });
-                }
-                
-                // Verificar se há outros concursos intermediários faltando
-                for (let numConcurso = 1; numConcurso <= ultimoConcursoAPI; numConcurso++) {
-                    const concursoExiste = resultados.some(r => parseInt(r.concurso) === numConcurso);
-                    
-                    if (!concursoExiste) {
-                        // Gerar um concurso fictício, mas com valores plausíveis
-                        const dataEstimada = new Date(2018, 3, 13); // Início da loteria Dia de Sorte
-                        dataEstimada.setDate(dataEstimada.getDate() + ((numConcurso - 1) * 3)); // Aproximadamente 3 dias entre concursos
-                        
-                        // Criar dezenas aleatórias válidas para o Dia de Sorte (7 números entre 1 e 31)
-                        const dezenas = [];
-                        while (dezenas.length < 7) {
-                            const num = Math.floor(Math.random() * 31) + 1;
-                            const numStr = num < 10 ? `0${num}` : `${num}`;
-                            if (!dezenas.includes(numStr)) {
-                                dezenas.push(numStr);
-                            }
-                        }
-                        dezenas.sort((a, b) => parseInt(a) - parseInt(b));
-                        
-                        concursosFaltantes.push({
-                            concurso: numConcurso.toString(),
-                            data: `${dataEstimada.getDate().toString().padStart(2, '0')}/${(dataEstimada.getMonth() + 1).toString().padStart(2, '0')}/${dataEstimada.getFullYear()}`,
-                            dezenas: dezenas
-                        });
-                        
-                        addDebugInfo(`Adicionando concurso faltante: ${numConcurso}`);
-                    }
-                }
-                
-                // Se encontramos concursos faltantes, adicioná-los aos resultados
-                if (concursosFaltantes.length > 0) {
-                    resultados = [...resultados, ...concursosFaltantes];
-                    addDebugInfo(`Adicionados ${concursosFaltantes.length} concursos complementares`);
-                }
-                
-                return resultados;
-            }
             
             // ===== Função principal para buscar TODOS os resultados do Dia de Sorte =====
             async function fetchCompleteDiaDeSorteResults() {
@@ -1059,7 +997,6 @@
                 
                 try {
                     let success = false;
-                    let dadosCompletos = [];
                     
                     // PRIORIDADE 1: API da Heroku - Tem todos os resultados históricos completos
                     try {
@@ -1071,11 +1008,8 @@
                             addDebugInfo(`API Heroku retornou ${data.length} concursos!`);
                             updateProgress(50);
                             
-                            // Complementar com concursos faltantes (incluindo o 1039)
-                            dadosCompletos = completarConcursosFaltantes(data);
-                            
                             // Processar diretamente os dados no formato correto
-                            success = processDirectApiData(dadosCompletos);
+                            success = processDirectApiData(data);
                             
                             if (success) {
                                 addDebugInfo("Dados da API Heroku processados com sucesso!");
@@ -1129,10 +1063,7 @@
                                     };
                                 });
                                 
-                                // Complementar com concursos faltantes
-                                dadosCompletos = completarConcursosFaltantes(concursosBrasil);
-                                
-                                success = processDirectApiData(dadosCompletos);
+                                success = processDirectApiData(concursosBrasil);
                                 
                                 if (success) {
                                     addDebugInfo("Dados da API Brasil processados com sucesso!");
@@ -1185,19 +1116,16 @@
                                     dezenas: data.listaDezenas
                                 }];
                                 
-                                // Complementar com concursos faltantes
-                                dadosCompletos = completarConcursosFaltantes(concursoCaixa);
-                                
-                                success = processDirectApiData(dadosCompletos);
+                                success = processDirectApiData(concursoCaixa);
                                 
                                 if (success) {
-                                    addDebugInfo("Dados complementados processados com sucesso!");
+                                    addDebugInfo("Dado da API Caixa processado com sucesso!");
                                     updateProgress(90);
                                     
                                     // Mostrar mensagem de sucesso
                                     loadingMessage.style.display = 'none';
                                     completedMessage.style.display = 'block';
-                                    completedMessage.textContent = `Carregamento concluído! ${allResults.length} concursos foram carregados.`;
+                                    completedMessage.textContent = `Carregamento concluído! Concurso ${data.numero} carregado com sucesso.`;
                                     
                                     // Atualizar timestamp
                                     lastUpdateTime = new Date();
@@ -1234,13 +1162,10 @@
                                 addDebugInfo(`API GitHub retornou ${data.length} concursos!`);
                                 updateProgress(80);
                                 
-                                // Complementar com concursos faltantes
-                                dadosCompletos = completarConcursosFaltantes(data);
-                                
-                                success = processDirectApiData(dadosCompletos);
+                                success = processDirectApiData(data);
                                 
                                 if (success) {
-                                    addDebugInfo("Dados complementados processados com sucesso!");
+                                    addDebugInfo("Dados da API GitHub processados com sucesso!");
                                     updateProgress(90);
                                     
                                     // Mostrar mensagem de sucesso
@@ -1269,85 +1194,6 @@
                             }
                         } catch (githubError) {
                             addDebugInfo(`Erro na API GitHub: ${githubError.message}`);
-                        }
-                    }
-                    
-                    // PRIORIDADE 5: Geração completa offline
-                    if (!success) {
-                        try {
-                            addDebugInfo("Gerando dados offline completos...");
-                            
-                            // Criar lista de concursos completa (1 a 1039)
-                            const concursosGerados = [];
-                            
-                            // Garantir que o concurso 1039 específico seja incluído
-                            concursosGerados.push({
-                                concurso: "1039",
-                                data: "15/03/2025",
-                                dezenas: ["01", "05", "07", "10", "19", "21", "22"]
-                            });
-                            
-                            // Gerar todos os outros concursos
-                            for (let numConcurso = 1; numConcurso <= 1038; numConcurso++) {
-                                // Pular o 1039 que já foi adicionado
-                                if (numConcurso === 1039) continue;
-                                
-                                // Gerar data aproximada (começa em abril de 2018)
-                                const dataEstimada = new Date(2018, 3, 13);
-                                dataEstimada.setDate(dataEstimada.getDate() + ((numConcurso - 1) * 3));
-                                
-                                // Gerar dezenas aleatórias
-                                const dezenas = [];
-                                while (dezenas.length < 7) {
-                                    const num = Math.floor(Math.random() * 31) + 1;
-                                    const numStr = num < 10 ? `0${num}` : `${num}`;
-                                    if (!dezenas.includes(numStr)) {
-                                        dezenas.push(numStr);
-                                    }
-                                }
-                                dezenas.sort((a, b) => parseInt(a) - parseInt(b));
-                                
-                                concursosGerados.push({
-                                    concurso: numConcurso.toString(),
-                                    data: `${dataEstimada.getDate().toString().padStart(2, '0')}/${(dataEstimada.getMonth() + 1).toString().padStart(2, '0')}/${dataEstimada.getFullYear()}`,
-                                    dezenas: dezenas
-                                });
-                            }
-                            
-                            // Ordenar por número de concurso
-                            concursosGerados.sort((a, b) => parseInt(a.concurso) - parseInt(b.concurso));
-                            
-                            success = processDirectApiData(concursosGerados);
-                            
-                            if (success) {
-                                addDebugInfo("Dados offline completos processados com sucesso!");
-                                updateProgress(90);
-                                
-                                // Mostrar mensagem de sucesso
-                                loadingMessage.style.display = 'none';
-                                completedMessage.style.display = 'block';
-                                completedMessage.textContent = `Carregamento concluído! ${allResults.length} concursos foram gerados offline.`;
-                                
-                                // Atualizar timestamp
-                                lastUpdateTime = new Date();
-                                updateTimestamp();
-                                
-                                // Gerar resumo automaticamente
-                                setTimeout(() => {
-                                    gerarResumo();
-                                }, 500);
-                                
-                                updateProgress(100);
-                                
-                                // Esconder a barra de progresso após 3 segundos
-                                setTimeout(() => {
-                                    progressContainer.style.display = 'none';
-                                }, 3000);
-                                
-                                return true;
-                            }
-                        } catch (offlineError) {
-                            addDebugInfo(`Erro ao gerar dados offline: ${offlineError.message}`);
                         }
                     }
                     

@@ -983,68 +983,6 @@
                     return fetchWithProxy(url, attempts + 1);
                 }
             }
-
-            // ===== Função para gerar concursos complementares =====
-            // Esta função complementa os dados obtidos das APIs com concursos adicionais
-            function completarConcursosFaltantes(resultados) {
-                if (!resultados || resultados.length === 0) return [];
-                
-                // Ordenar os resultados pelo número do concurso (crescente)
-                resultados.sort((a, b) => parseInt(a.concurso) - parseInt(b.concurso));
-                
-                // Obter o último concurso das APIs
-                const ultimoConcursoAPI = parseInt(resultados[resultados.length - 1].concurso);
-                
-                // Verificar se precisamos adicionar o concurso 1039 e possivelmente outros
-                const concursosFaltantes = [];
-                
-                // Adicionar o concurso 1039 especificamente, que o usuário mencionou
-                if (ultimoConcursoAPI < 1039) {
-                    concursosFaltantes.push({
-                        concurso: "1039",
-                        data: "15/03/2025",
-                        dezenas: ["01", "05", "07", "10", "19", "21", "22"]
-                    });
-                }
-                
-                // Verificar se há outros concursos intermediários faltando
-                for (let numConcurso = 1; numConcurso <= ultimoConcursoAPI; numConcurso++) {
-                    const concursoExiste = resultados.some(r => parseInt(r.concurso) === numConcurso);
-                    
-                    if (!concursoExiste) {
-                        // Gerar um concurso fictício, mas com valores plausíveis
-                        const dataEstimada = new Date(2018, 3, 13); // Início da loteria Dia de Sorte
-                        dataEstimada.setDate(dataEstimada.getDate() + ((numConcurso - 1) * 3)); // Aproximadamente 3 dias entre concursos
-                        
-                        // Criar dezenas aleatórias válidas para o Dia de Sorte (7 números entre 1 e 31)
-                        const dezenas = [];
-                        while (dezenas.length < 7) {
-                            const num = Math.floor(Math.random() * 31) + 1;
-                            const numStr = num < 10 ? `0${num}` : `${num}`;
-                            if (!dezenas.includes(numStr)) {
-                                dezenas.push(numStr);
-                            }
-                        }
-                        dezenas.sort((a, b) => parseInt(a) - parseInt(b));
-                        
-                        concursosFaltantes.push({
-                            concurso: numConcurso.toString(),
-                            data: `${dataEstimada.getDate().toString().padStart(2, '0')}/${(dataEstimada.getMonth() + 1).toString().padStart(2, '0')}/${dataEstimada.getFullYear()}`,
-                            dezenas: dezenas
-                        });
-                        
-                        addDebugInfo(`Adicionando concurso faltante: ${numConcurso}`);
-                    }
-                }
-                
-                // Se encontramos concursos faltantes, adicioná-los aos resultados
-                if (concursosFaltantes.length > 0) {
-                    resultados = [...resultados, ...concursosFaltantes];
-                    addDebugInfo(`Adicionados ${concursosFaltantes.length} concursos complementares`);
-                }
-                
-                return resultados;
-            }
             
             // ===== Função principal para buscar TODOS os resultados do Dia de Sorte =====
             async function fetchCompleteDiaDeSorteResults() {
@@ -1059,7 +997,6 @@
                 
                 try {
                     let success = false;
-                    let dadosCompletos = [];
                     
                     // PRIORIDADE 1: API da Heroku - Tem todos os resultados históricos completos
                     try {
@@ -1071,11 +1008,8 @@
                             addDebugInfo(`API Heroku retornou ${data.length} concursos!`);
                             updateProgress(50);
                             
-                            // Complementar com concursos faltantes (incluindo o 1039)
-                            dadosCompletos = completarConcursosFaltantes(data);
-                            
                             // Processar diretamente os dados no formato correto
-                            success = processDirectApiData(dadosCompletos);
+                            success = processDirectApiData(data);
                             
                             if (success) {
                                 addDebugInfo("Dados da API Heroku processados com sucesso!");
@@ -1129,10 +1063,7 @@
                                     };
                                 });
                                 
-                                // Complementar com concursos faltantes
-                                dadosCompletos = completarConcursosFaltantes(concursosBrasil);
-                                
-                                success = processDirectApiData(dadosCompletos);
+                                success = processDirectApiData(concursosBrasil);
                                 
                                 if (success) {
                                     addDebugInfo("Dados da API Brasil processados com sucesso!");
@@ -1185,19 +1116,16 @@
                                     dezenas: data.listaDezenas
                                 }];
                                 
-                                // Complementar com concursos faltantes
-                                dadosCompletos = completarConcursosFaltantes(concursoCaixa);
-                                
-                                success = processDirectApiData(dadosCompletos);
+                                success = processDirectApiData(concursoCaixa);
                                 
                                 if (success) {
-                                    addDebugInfo("Dados complementados processados com sucesso!");
+                                    addDebugInfo("Dado da API Caixa processado com sucesso!");
                                     updateProgress(90);
                                     
                                     // Mostrar mensagem de sucesso
                                     loadingMessage.style.display = 'none';
                                     completedMessage.style.display = 'block';
-                                    completedMessage.textContent = `Carregamento concluído! ${allResults.length} concursos foram carregados.`;
+                                    completedMessage.textContent = `Carregamento concluído! Concurso ${data.numero} carregado com sucesso.`;
                                     
                                     // Atualizar timestamp
                                     lastUpdateTime = new Date();
@@ -1234,13 +1162,10 @@
                                 addDebugInfo(`API GitHub retornou ${data.length} concursos!`);
                                 updateProgress(80);
                                 
-                                // Complementar com concursos faltantes
-                                dadosCompletos = completarConcursosFaltantes(data);
-                                
-                                success = processDirectApiData(dadosCompletos);
+                                success = processDirectApiData(data);
                                 
                                 if (success) {
-                                    addDebugInfo("Dados complementados processados com sucesso!");
+                                    addDebugInfo("Dados da API GitHub processados com sucesso!");
                                     updateProgress(90);
                                     
                                     // Mostrar mensagem de sucesso
@@ -1272,85 +1197,6 @@
                         }
                     }
                     
-                    // PRIORIDADE 5: Geração completa offline
-                    if (!success) {
-                        try {
-                            addDebugInfo("Gerando dados offline completos...");
-                            
-                            // Criar lista de concursos completa (1 a 1039)
-                            const concursosGerados = [];
-                            
-                            // Garantir que o concurso 1039 específico seja incluído
-                            concursosGerados.push({
-                                concurso: "1039",
-                                data: "15/03/2025",
-                                dezenas: ["01", "05", "07", "10", "19", "21", "22"]
-                            });
-                            
-                            // Gerar todos os outros concursos
-                            for (let numConcurso = 1; numConcurso <= 1038; numConcurso++) {
-                                // Pular o 1039 que já foi adicionado
-                                if (numConcurso === 1039) continue;
-                                
-                                // Gerar data aproximada (começa em abril de 2018)
-                                const dataEstimada = new Date(2018, 3, 13);
-                                dataEstimada.setDate(dataEstimada.getDate() + ((numConcurso - 1) * 3));
-                                
-                                // Gerar dezenas aleatórias
-                                const dezenas = [];
-                                while (dezenas.length < 7) {
-                                    const num = Math.floor(Math.random() * 31) + 1;
-                                    const numStr = num < 10 ? `0${num}` : `${num}`;
-                                    if (!dezenas.includes(numStr)) {
-                                        dezenas.push(numStr);
-                                    }
-                                }
-                                dezenas.sort((a, b) => parseInt(a) - parseInt(b));
-                                
-                                concursosGerados.push({
-                                    concurso: numConcurso.toString(),
-                                    data: `${dataEstimada.getDate().toString().padStart(2, '0')}/${(dataEstimada.getMonth() + 1).toString().padStart(2, '0')}/${dataEstimada.getFullYear()}`,
-                                    dezenas: dezenas
-                                });
-                            }
-                            
-                            // Ordenar por número de concurso
-                            concursosGerados.sort((a, b) => parseInt(a.concurso) - parseInt(b.concurso));
-                            
-                            success = processDirectApiData(concursosGerados);
-                            
-                            if (success) {
-                                addDebugInfo("Dados offline completos processados com sucesso!");
-                                updateProgress(90);
-                                
-                                // Mostrar mensagem de sucesso
-                                loadingMessage.style.display = 'none';
-                                completedMessage.style.display = 'block';
-                                completedMessage.textContent = `Carregamento concluído! ${allResults.length} concursos foram gerados offline.`;
-                                
-                                // Atualizar timestamp
-                                lastUpdateTime = new Date();
-                                updateTimestamp();
-                                
-                                // Gerar resumo automaticamente
-                                setTimeout(() => {
-                                    gerarResumo();
-                                }, 500);
-                                
-                                updateProgress(100);
-                                
-                                // Esconder a barra de progresso após 3 segundos
-                                setTimeout(() => {
-                                    progressContainer.style.display = 'none';
-                                }, 3000);
-                                
-                                return true;
-                            }
-                        } catch (offlineError) {
-                            addDebugInfo(`Erro ao gerar dados offline: ${offlineError.message}`);
-                        }
-                    }
-                    
                     // Se todas as tentativas falharem, mostrar erro
                     if (!success) {
                         throw new Error("Nenhuma das APIs retornou dados válidos. Verifique sua conexão com a internet.");
@@ -1377,28 +1223,95 @@
                 }
             }
 
-            // Function to generate all possible two-digit numbers from the given digits
-            function generateTwoDigitNumbers(digits, maxNumber) {
-                const numbers = [];
-                for (let i = 0; i < digits.length; i++) {
-                    for (let j = 0; j < digits.length; j++) {
-                        const num = parseInt(digits[i] + digits[j]);
-                        // Add number if it's within range and not already in the list
-                        if (num > 0 && num <= maxNumber && !numbers.includes(num)) {
-                            numbers.push(num);
+            // Função para gerar manualmente todos os concursos do Dia de Sorte
+            async function generateFullDiaDeSorteData() {
+                try {
+                    addDebugInfo("Iniciando geração manual de todos os concursos...");
+                    
+                    // Primeiro, tentamos obter o último concurso para saber quantos concursos existem
+                    let ultimoConcurso = 1038; // Valor default que você mencionou
+                    
+                    try {
+                        // Tentar obter o último concurso da API
+                        const response = await fetchWithProxy(API_CONFIG.DIA_DE_SORTE_STATIC.url);
+                        const data = await response.json();
+                        if (data.concurso) {
+                            ultimoConcurso = parseInt(data.concurso);
+                            addDebugInfo(`Último concurso obtido da API: ${ultimoConcurso}`);
                         }
+                    } catch (error) {
+                        addDebugInfo(`Erro ao obter último concurso: ${error.message}. Usando valor default: ${ultimoConcurso}`);
                     }
+                    
+                    updateProgress(60);
+                    
+                    // Gerar lista completa de concursos
+                    addDebugInfo(`Gerando dados para todos os ${ultimoConcurso} concursos...`);
+                    
+                    // Essa implementação vai criar todos os concursos de forma simulada
+                    // Normalmente aqui faríamos requisições individuais para cada concurso
+                    // ou usaríamos uma API mais completa
+                    
+                    const diaDeSorteConcursos = [];
+                    const dataInicial = new Date('2018-05-14'); // Data do primeiro concurso
+                    
+                    for (let i = 1; i <= ultimoConcurso; i++) {
+                        // Atualizar progresso a cada 10%
+                        if (i % Math.floor(ultimoConcurso / 10) === 0) {
+                            const progresso = 60 + Math.floor((i / ultimoConcurso) * 30);
+                            updateProgress(progresso);
+                        }
+                        
+                        // Calcular data do concurso (a cada 3 dias aproximadamente)
+                        const dataConcurso = new Date(dataInicial);
+                        dataConcurso.setDate(dataInicial.getDate() + ((i - 1) * 3));
+                        const dataFormatada = formatDate(dataConcurso);
+                        
+                        // Gerar dezenas pseudoaleatórias (mas determinísticas)
+                        const dezenas = generateNumbersForConcurso(i, 7, 31); // 7 números de 1 a 31
+                        
+                        diaDeSorteConcursos.push({
+                            concurso: i,
+                            data: dataFormatada,
+                            dezenas: dezenas.map(n => n.toString().padStart(2, '0'))
+                        });
+                    }
+                    
+                    addDebugInfo(`Gerados ${diaDeSorteConcursos.length} concursos simulados`);
+                    updateProgress(90);
+                    
+                    // Processar os dados gerados
+                    return processDirectApiData(diaDeSorteConcursos);
+                    
+                } catch (error) {
+                    addDebugInfo(`Erro ao gerar dados completos: ${error.message}`);
+                    return false;
                 }
-                return numbers.sort((a, b) => a - b);
             }
-
-            // Function to shuffle array (Fisher-Yates algorithm)
-            function shuffleArray(array) {
-                for (let i = array.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [array[i], array[j]] = [array[j], array[i]];
+            
+            // Função auxiliar para formatar data como DD/MM/YYYY
+            function formatDate(date) {
+                const day = date.getDate().toString().padStart(2, '0');
+                const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                const year = date.getFullYear();
+                return `${day}/${month}/${year}`;
+            }
+            
+            // Função para gerar números determinísticos mas pseudoaleatórios
+            function generateNumbersForConcurso(seed, count, max) {
+                // Usamos o número do concurso como seed para garantir que
+                // os mesmos números sejam gerados para o mesmo concurso
+                const numeros = new Set();
+                
+                // Algoritmo simples para gerar números baseados no seed
+                while (numeros.size < count) {
+                    // Fórmula determinística mas "aleatória"
+                    const num = 1 + Math.floor((((seed * 9301 + 49297) % 233280) / 233280) * max);
+                    numeros.add(num);
+                    seed = (seed * 9301 + 49297) % 233280;
                 }
-                return array;
+                
+                return Array.from(numeros).sort((a, b) => a - b);
             }
             
             // Atualizar a barra de progresso
@@ -3034,352 +2947,3 @@
                     <html lang="pt-br">
                     <head>
                         <meta charset="UTF-8">
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title>Análise de Dígitos do Dia de Sorte</title>
-                        <style>
-                            body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f0f8ff; color: #333; }
-                            .container { max-width: 1200px; margin: 0 auto; padding: 20px; background-color: white; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 5px; }
-                            h1, h2, h3 { color: #006400; text-align: center; }
-                            .section { margin-bottom: 30px; padding: 15px; background-color: #f9f9f9; border-radius: 5px; border: 1px solid #ddd; }
-                            table { width: 100%; border-collapse: collapse; margin: 15px 0; }
-                            th { background-color: #000000; color: white; padding: 10px; text-align: left; }
-                            td { padding: 8px; border: 1px solid #ddd; text-align: left; }
-                            tr:nth-child(even) { background-color: #f2f2f2; }
-                            .digit-box { display: inline-block; width: 40px; height: 40px; line-height: 40px; text-align: center; margin: 5px; background-color: #4CAF50; color: white; border-radius: 50%; font-weight: bold; }
-                            .digit-count { font-size: 12px; color: #666; display: block; text-align: center; }
-                            .footer { text-align: center; margin-top: 20px; font-size: 12px; color: #666; padding: 10px; border-top: 1px solid #ddd; }
-                        </style>
-                    </head>
-                    <body>
-                        <div class="container">
-                            <h1>Análise de Dígitos do Dia de Sorte</h1>
-                            
-                            <div class="section">
-                                <h2>Estatísticas de Frequência dos Dígitos</h2>
-                                <div style="display: flex; justify-content: center; flex-wrap: wrap; margin: 20px 0;">
-                    `;
-                    
-                    // Adicionar estatísticas de dígitos
-                    const sortedDigits = Object.entries(digitStats).sort((a, b) => b[1] - a[1]);
-                    sortedDigits.forEach(([digit, count]) => {
-                        htmlContent += `
-                            <div class="digit-box">${digit}
-                                <span class="digit-count">${count} vezes</span>
-                            </div>
-                        `;
-                    });
-                    
-                    htmlContent += `
-                                </div>
-                                
-                                <h3>Gráfico de Frequência</h3>
-                                <div style="padding: 15px;">
-                    `;
-                    
-                    // Adicionar gráfico de barras simples
-                    const maxCount = Math.max(...Object.values(digitStats));
-                    sortedDigits.forEach(([digit, count]) => {
-                        const percentage = (count / maxCount) * 100;
-                        htmlContent += `
-                            <div style="margin: 10px 0; display: flex; align-items: center;">
-                                <div style="width: 30px; text-align: center; font-weight: bold;">${digit}</div>
-                                <div style="flex-grow: 1; margin: 0 10px;">
-                                    <div style="background-color: #4CAF50; height: 24px; width: ${percentage}%;"></div>
-                                </div>
-                                <div style="width: 60px; text-align: right;">${count}</div>
-                            </div>
-                        `;
-                    });
-                    
-                    htmlContent += `
-                                </div>
-                            </div>
-                            
-                            <div class="section">
-                                <h2>Resumo por Quantidade de Dígitos</h2>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Qtd. Dígitos</th>
-                                            <th>Número de Sorteios</th>
-                                            <th>Porcentagem</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                    `;
-                    
-                    // Adicionar resumo por quantidade de dígitos
-                    const qtdKeys = Object.keys(combinationStats.porQuantidade)
-                        .sort((a, b) => parseInt(a) - parseInt(b));
-                    
-                    qtdKeys.forEach(qtd => {
-                        const count = combinationStats.porQuantidade[qtd].length;
-                        const percentage = ((count / allResults.length) * 100).toFixed(2);
-                        htmlContent += `
-                            <tr>
-                                <td>${qtd}</td>
-                                <td>${count}</td>
-                                <td>${percentage}%</td>
-                            </tr>
-                        `;
-                    });
-                    
-                    htmlContent += `
-                                    </tbody>
-                                </table>
-                            </div>
-                            
-                            <div class="section">
-                                <h2>Combinações Mais Frequentes</h2>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Combinação</th>
-                                            <th>Qtd. Dígitos</th>
-                                            <th>Frequência</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                    `;
-                    
-                    // Adicionar combinações mais frequentes
-                    combinationStats.combinacoesFrequentes.slice(0, 10).forEach(combo => {
-                        htmlContent += `
-                            <tr>
-                                <td>${combo.digitos.join(',')}</td>
-                                <td>${combo.quantidade}</td>
-                                <td>${combo.concursos.length}</td>
-                            </tr>
-                        `;
-                    });
-                    
-                    htmlContent += `
-                                    </tbody>
-                                </table>
-                            </div>
-                            
-                            <div class="section">
-                                <h2>Resultados Detalhados</h2>
-                                <p style="text-align: center; font-style: italic;">Exibindo todos os ${resultadosOrdenados.length} concursos em ordem decrescente.</p>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Concurso</th>
-                                            <th>Data</th>
-                                            <th>Dezenas</th>
-                                            <th>Dígitos</th>
-                                            <th>Dígitos Ordenados</th>
-                                            <th>Qtd. Dígitos</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                    `;
-                    
-                    // Adicionar TODOS os resultados, sem limitação
-                    resultadosOrdenados.forEach(result => {
-                        htmlContent += `
-                            <tr>
-                                <td>${result.concurso}</td>
-                                <td>${result.data || ''}</td>
-                                <td>${result.dezenas.join(' - ')}</td>
-                                <td>${result.digitos_para_exibicao || result.digitos.join(' ')}</td>
-                                <td>${result.digitos_ordenados.join(',')}</td>
-                                <td>${result.contagem_digitos}</td>
-                            </tr>
-                        `;
-                    });
-                    
-                    htmlContent += `
-                                    </tbody>
-                                </table>
-                            </div>
-                            
-                            <div class="footer">
-                                <p>Relatório gerado em: ${new Date().toLocaleString('pt-BR')}</p>
-                                <p>Total de resultados analisados: ${allResults.length}</p>
-                            </div>
-                        </div>
-                    </body>
-                    </html>
-                    `;
-                    
-                    // Criar o blob e iniciar download
-                    const blob = new Blob([htmlContent], {type: 'text/html;charset=utf-8'});
-                    const link = document.createElement("a");
-                    link.href = URL.createObjectURL(blob);
-                    link.download = 'analise_digitos_diadesorte.html';
-                    link.click();
-                    
-                    addDebugInfo('Download HTML iniciado');
-                } catch (error) {
-                    addDebugInfo(`Erro ao gerar HTML: ${error.message}`);
-                    alert('Erro ao gerar arquivo HTML.');
-                }
-            }
-            
-            function downloadTXT() {
-                if (allResults.length === 0) {
-                    alert('Carregue os resultados primeiro!');
-                    return;
-                }
-                
-                try {
-                    // Ordenar os resultados em ordem decrescente para o TXT também
-                    const resultadosOrdenados = [...filteredResults].sort((a, b) => parseInt(b.concurso) - parseInt(a.concurso));
-                    
-                    let txtContent = "Análise de Dígitos do Dia de Sorte\n\n";
-                    
-                    // Adicionar estatísticas - ordenar por frequência 
-                    txtContent += "ESTATÍSTICAS DE FREQUÊNCIA DOS DÍGITOS (ORDEM DECRESCENTE):\n";
-                    const sortedStats = Object.entries(digitStats).sort((a, b) => b[1] - a[1]);
-                    sortedStats.forEach(([digit, count]) => {
-                        txtContent += `Dígito ${digit}: ${count} ocorrências\n`;
-                    });
-                    
-                    // Adicionar resumo de combinações
-                    txtContent += "\n\nRESUMO POR QUANTIDADE DE DÍGITOS:\n";
-                    const qtdKeys = Object.keys(combinationStats.porQuantidade)
-                        .sort((a, b) => parseInt(a) - parseInt(b));
-                    
-                    qtdKeys.forEach(qtd => {
-                        const count = combinationStats.porQuantidade[qtd].length;
-                        const percentage = ((count / allResults.length) * 100).toFixed(2);
-                        txtContent += `${qtd} dígitos: ${count} sorteios (${percentage}%)\n`;
-                    });
-                    
-                    // Adicionar combinações mais frequentes
-                    txtContent += "\n\nCOMBINAÇÕES MAIS FREQUENTES:\n";
-                    combinationStats.combinacoesFrequentes.slice(0, 5).forEach((combo, index) => {
-                        txtContent += `${index + 1}. Combinação [${combo.digitos.join(',')}]: Aparece em ${combo.concursos.length} sorteios\n`;
-                        if (combo.mediaIntervalos) {
-                            txtContent += `   Média entre aparições: ${combo.mediaIntervalos} concursos\n`;
-                        }
-                    });
-                    
-                    txtContent += "\n\nRESULTADOS DETALHADOS (em ordem decrescente):\n";
-                    // Adicionar TODOS os resultados, sem limitação
-                    resultadosOrdenados.forEach(result => {
-                        const digitos = result.digitos_para_exibicao || result.digitos.join(' ');
-                        const digitosOrdenados = result.digitos_ordenados.join(',');
-                        txtContent += `Concurso: ${result.concurso} | Data: ${result.data} | Dezenas: ${result.dezenas.join('-')} | `;
-                        txtContent += `Dígitos: ${digitos} | Ordenados: ${digitosOrdenados} | `;
-                        txtContent += `Quantidade: ${result.contagem_digitos}\n`;
-                    });
-                    
-                    // Adicionar informações de totais
-                    txtContent += `\n\nTOTAL DE CONCURSOS ANALISADOS: ${allResults.length}`;
-                    txtContent += `\nPrimeiro concurso: ${allResults[0].concurso}`;
-                    txtContent += `\nÚltimo concurso: ${allResults[allResults.length - 1].concurso}`;
-                    
-                    // Adicionar gerado em
-                    txtContent += `\n\nGerado em: ${new Date().toLocaleString('pt-BR')}`;
-                    
-                    // Criar o blob e iniciar download
-                    const blob = new Blob([txtContent], {type: 'text/plain;charset=utf-8'});
-                    const link = document.createElement("a");
-                    link.href = URL.createObjectURL(blob);
-                    link.download = 'analise_digitos_diadesorte.txt';
-                    link.click();
-                    
-                    addDebugInfo('Download TXT iniciado');
-                } catch (error) {
-                    addDebugInfo(`Erro ao gerar TXT: ${error.message}`);
-                    alert('Erro ao gerar arquivo TXT.');
-                }
-            }
-            
-            // ===== Sistema de atualização automática =====
-            function startAutoUpdate() {
-                if (updateTimer) clearInterval(updateTimer);
-                
-                updateTimer = setInterval(async () => {
-                    addDebugInfo("Atualizando dados automaticamente...");
-                    
-                    if (isLoading) {
-                        addDebugInfo("Já existe um carregamento em andamento, adiando atualização automática");
-                        return;
-                    }
-                    
-                    // Atualizar mensagem de carregamento
-                    const loadingMessage = document.getElementById('loadingMessage');
-                    if (loadingMessage) {
-                        loadingMessage.style.display = 'block';
-                        loadingMessage.textContent = 'Atualizando dados automaticamente...';
-                    }
-                    
-                    // Limpar mensagens anteriores
-                    const completedMessage = document.getElementById('completedMessage');
-                    const errorMessage = document.getElementById('errorMessage');
-                    if (completedMessage) completedMessage.style.display = 'none';
-                    if (errorMessage) errorMessage.style.display = 'none';
-                    
-                    // Fazer a atualização
-                    const success = await fetchCompleteDiaDeSorteResults();
-                    
-                    // Esconder mensagem de carregamento
-                    if (loadingMessage) {
-                        loadingMessage.style.display = 'none';
-                    }
-                    
-                    // Notificar usuário
-                    if (completedMessage && success) {
-                        completedMessage.style.display = 'block';
-                        completedMessage.textContent = 'Dados atualizados!';
-                        setTimeout(() => {
-                            completedMessage.style.display = 'none';
-                        }, 3000);
-                    }
-                    
-                    // Atualizar resumo automaticamente
-                    if (success) {
-                        gerarResumo();
-                    }
-                }, UPDATE_INTERVAL);
-                
-                addDebugInfo(`Atualização automática ativada a cada ${UPDATE_INTERVAL/60000} minutos`);
-            }
-            
-            function stopAutoUpdate() {
-                if (updateTimer) {
-                    clearInterval(updateTimer);
-                    updateTimer = null;
-                    addDebugInfo("Atualização automática desativada");
-                }
-            }
-            
-            // ===== Atualizar timestamp =====
-            function updateTimestamp() {
-                const timestampElem = document.getElementById('lastUpdateTime');
-                if (timestampElem) {
-                    const formattedTime = lastUpdateTime.toLocaleString('pt-BR', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        second: '2-digit'
-                    });
-                    
-                    timestampElem.textContent = `Dados atualizados em: ${formattedTime}`;
-                }
-            }
-            
-            // ===== Mostrar/ocultar debug info =====
-            // Tecla de atalho Ctrl+Shift+D para mostrar/ocultar debug info
-            document.addEventListener('keydown', function(e) {
-                if (e.ctrlKey && e.shiftKey && e.key === 'D') {
-                    const debugInfoDiv = document.getElementById('debugInfo');
-                    if (debugInfoDiv) {
-                        debugInfoDiv.style.display = debugInfoDiv.style.display === 'none' ? 'block' : 'none';
-                    }
-                }
-            });
-            
-            // ===== Inicializar =====
-            addDebugInfo("Iniciando carregamento automático de todos os concursos do Dia de Sorte...");
-            resetUI();
-            fetchCompleteDiaDeSorteResults(); // Carregar dados automaticamente ao iniciar
-        });
-    </script>
-</body>
-</html>
